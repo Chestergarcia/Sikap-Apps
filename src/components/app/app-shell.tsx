@@ -130,10 +130,10 @@ export function AppShell({
             <Image
               alt=""
               className="feed-brand__image"
-              height={559}
+              height={268}
               priority
-              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sikap-logo.png`}
-              width={1024}
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sikap-logo-cropped.png`}
+              width={274}
             />
           </Link>
           <label className="feed-search">

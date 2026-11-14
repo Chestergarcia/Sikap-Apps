@@ -16,10 +16,10 @@ export function Brand({ light = false }: BrandProps) {
       <Image
         alt=""
         className="brand-lockup__image"
-        height={559}
+        height={268}
         priority
-        src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sikap-logo.png`}
-        width={1024}
+        src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sikap-logo-cropped.png`}
+        width={274}
       />
     </Link>
   );

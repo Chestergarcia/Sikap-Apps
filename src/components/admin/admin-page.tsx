@@ -8,15 +8,21 @@ import {
   Check,
   CircleDollarSign,
   Clock3,
+  Download,
+  BarChart3,
   FileImage,
   FileText,
+  History,
+  LayoutDashboard,
+  Menu,
   Play,
   Search,
   ShieldCheck,
   Users,
   Wallet,
+  X,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -32,6 +38,19 @@ type ReviewItem = {
   title: string;
   type: "Text" | "Photo" | "Video";
 };
+
+type ReviewRecord = {
+  id: string;
+  author: string;
+  title: string;
+  decision: "approved" | "changes";
+  recorded: string;
+};
+
+const sampleWeeklyActivity = [
+  { day: "Mon", posts: 8 }, { day: "Tue", posts: 12 }, { day: "Wed", posts: 7 },
+  { day: "Thu", posts: 15 }, { day: "Fri", posts: 11 }, { day: "Sat", posts: 18 }, { day: "Sun", posts: 15 },
+];
 
 const initialQueue: ReviewItem[] = [
   {
@@ -76,12 +95,35 @@ function ReviewTypeIcon({ type }: { type: ReviewItem["type"] }) {
 
 export function AdminPage() {
   const [queue, setQueue] = useState(initialQueue);
+  const [reviewRecords, setReviewRecords] = useState<ReviewRecord[]>([
+    { id: "record-1", author: "Mika Santos", title: "Finished the first wireframe for my portfolio project", decision: "approved", recorded: "Today, 9:42 AM" },
+    { id: "record-2", author: "Luis Reyes", title: "A small JavaScript lesson from today", decision: "approved", recorded: "Today, 9:10 AM" },
+  ]);
   const [filter, setFilter] = useState<ReviewFilter>("All sample posts");
   const [query, setQuery] = useState("");
   const [notice, setNotice] = useState("");
+  const [activeSection, setActiveSection] = useState("overview");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (!sidebarOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSidebarOpen(false);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [sidebarOpen]);
 
   const pendingCount = queue.filter((item) => item.status === "pending").length;
   const reviewedCount = queue.length - pendingCount;
+  const approvalRate = reviewedCount
+    ? Math.round((queue.filter((item) => item.status === "approved").length / reviewedCount) * 100)
+    : 0;
   const sampleRewardValue = queue
     .filter((item) => item.status === "approved")
     .reduce((total, item) => total + (item.type === "Video" ? 5 : 1), 0);
@@ -111,6 +153,12 @@ export function AdminPage() {
       return matchesStatus && matchesSearch;
     });
   }, [filter, query, queue]);
+  const visibleMembers = queue.filter((member) =>
+    `${member.author} ${member.category} ${member.title} ${member.status}`.toLowerCase().includes(query.trim().toLowerCase()),
+  );
+  const visibleRecords = reviewRecords.filter((record) =>
+    `${record.author} ${record.title} ${record.decision}`.toLowerCase().includes(query.trim().toLowerCase()),
+  );
 
   function updateReview(id: string, status: Exclude<ReviewStatus, "pending">) {
     const review = queue.find((item) => item.id === id);
@@ -118,32 +166,49 @@ export function AdminPage() {
     setQueue((current) =>
       current.map((item) => (item.id === id ? { ...item, status } : item)),
     );
+    setReviewRecords((current) => [
+      { id: `${id}-${Date.now()}`, author: review.author, title: review.title, decision: status, recorded: "Just now" },
+      ...current,
+    ]);
     setNotice(
       `${review.author}'s post marked ${status === "approved" ? "approved" : "needs changes"} in this demo only. No reward was issued.`,
     );
+  }
+
+  function exportReviewRecords() {
+    const rows = [["Author", "Post", "Decision", "Recorded"], ...reviewRecords.map((record) => [record.author, record.title, record.decision, record.recorded])];
+    const csv = rows.map((row) => row.map((value) => `"${value.replaceAll('"', '""')}"`).join(",")).join("\n");
+    const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "sikap-demo-review-records.csv";
+    link.click();
+    URL.revokeObjectURL(url);
   }
 
   return (
     <div className="admin-console">
       <header className="admin-topbar">
         <div className="admin-topbar__inner">
+          <button aria-controls="admin-section-links" aria-expanded={sidebarOpen} aria-label={sidebarOpen ? "Close admin navigation" : "Open admin navigation"} className="admin-mobile-menu" onClick={() => setSidebarOpen((open) => !open)} type="button">
+            {sidebarOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
+          </button>
           <Link className="admin-brand" href="/admin" aria-label="SIKAP admin preview" prefetch={false}>
             <Image
               alt=""
               className="admin-brand__image"
-              height={559}
+              height={268}
               priority
-              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sikap-logo.png`}
-              width={1024}
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sikap-logo-cropped.png`}
+              width={274}
             />
-            <span className="admin-brand__label">ADMIN</span>
           </Link>
           <label className="feed-search admin-topbar__search">
             <Search size={18} aria-hidden="true" />
             <input
-              aria-label="Search review queue"
+              aria-label="Search dashboard"
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search review queue"
+              placeholder="Search dashboard"
               type="search"
               value={query}
             />
@@ -156,6 +221,21 @@ export function AdminPage() {
       </header>
 
       <div className="admin-layout">
+        {sidebarOpen ? <button aria-label="Close admin navigation" className="admin-sidebar__backdrop" onClick={() => setSidebarOpen(false)} type="button" /> : null}
+        <aside className={`admin-sidebar${sidebarOpen ? " admin-sidebar--open" : ""}`} aria-label="Admin navigation">
+          <p className="admin-sidebar__title">Workspace</p>
+          <div className="admin-sidebar__drawer-header"><strong>Menu</strong><button aria-label="Close admin navigation" onClick={() => setSidebarOpen(false)} type="button"><X size={18} aria-hidden="true" /></button></div>
+          <nav className="admin-section-nav" id="admin-section-links" aria-label="Admin dashboard sections">
+            <a aria-current={activeSection === "overview" ? "page" : undefined} className={activeSection === "overview" ? "is-active" : undefined} href="#overview" onClick={() => { setActiveSection("overview"); setSidebarOpen(false); }}><LayoutDashboard size={17} aria-hidden="true" />Dashboard</a>
+            <a aria-current={activeSection === "review-queue" ? "page" : undefined} className={activeSection === "review-queue" ? "is-active" : undefined} href="#review-queue" onClick={() => { setActiveSection("review-queue"); setSidebarOpen(false); }}><FileText size={17} aria-hidden="true" />Content review<span className="admin-sidebar__count">{pendingCount}</span></a>
+            <a aria-current={activeSection === "members" ? "page" : undefined} className={activeSection === "members" ? "is-active" : undefined} href="#members" onClick={() => { setActiveSection("members"); setSidebarOpen(false); }}><Users size={17} aria-hidden="true" />Members</a>
+            <a aria-current={activeSection === "analytics" ? "page" : undefined} className={activeSection === "analytics" ? "is-active" : undefined} href="#analytics" onClick={() => { setActiveSection("analytics"); setSidebarOpen(false); }}><BarChart3 size={17} aria-hidden="true" />Analytics</a>
+            <a aria-current={activeSection === "records" ? "page" : undefined} className={activeSection === "records" ? "is-active" : undefined} href="#records" onClick={() => { setActiveSection("records"); setSidebarOpen(false); }}><History size={17} aria-hidden="true" />Review records</a>
+            <a aria-current={activeSection === "community-pulse" ? "page" : undefined} className={activeSection === "community-pulse" ? "is-active" : undefined} href="#community-pulse" onClick={() => { setActiveSection("community-pulse"); setSidebarOpen(false); }}><Users size={17} aria-hidden="true" />Community pulse</a>
+            <a aria-current={activeSection === "rewards" ? "page" : undefined} className={activeSection === "rewards" ? "is-active" : undefined} href="#rewards" onClick={() => { setActiveSection("rewards"); setSidebarOpen(false); }}><Wallet size={17} aria-hidden="true" />Rewards</a>
+            <a aria-current={activeSection === "safety" ? "page" : undefined} className={activeSection === "safety" ? "is-active" : undefined} href="#safety" onClick={() => { setActiveSection("safety"); setSidebarOpen(false); }}><ShieldCheck size={17} aria-hidden="true" />Safety & review</a>
+          </nav>
+        </aside>
         <main className="app-page admin-page">
         <header className="app-page__heading">
           <div>
@@ -182,14 +262,6 @@ export function AdminPage() {
             {notice}
           </p>
         ) : null}
-
-        <nav className="admin-section-nav" aria-label="Admin dashboard sections">
-          <a href="#overview">Overview</a>
-          <a href="#review-queue">Post review</a>
-          <a href="#members">Members</a>
-          <a href="#community-pulse">Community pulse</a>
-          <a href="#rewards">Rewards</a>
-        </nav>
 
         <section className="admin-dashboard-section" id="overview">
           <div className="admin-section-heading">
@@ -232,7 +304,32 @@ export function AdminPage() {
             <span className="admin-metric__label">Sample reward value</span>
             <small>Illustrative only · not issued</small>
           </article>
+          <article className="admin-metric">
+            <span className="admin-metric__icon admin-metric__icon--green" aria-hidden="true"><ShieldCheck size={18} /></span>
+            <span className="admin-metric__value">{approvalRate}%</span>
+            <span className="admin-metric__label">Approval rate</span>
+            <small>Based on reviewed sample posts</small>
+          </article>
         </section>
+        </section>
+
+        <section className="admin-dashboard-section" id="analytics">
+          <div className="admin-section-heading"><div><h2>Analytics</h2><p>Illustrative activity and current review outcomes.</p></div><span className="app-sample-label">Sample data</span></div>
+          <div className="admin-analytics-grid">
+            <article className="admin-insight-card">
+              <div className="admin-section-heading"><div><h3>Post activity</h3><p>Sample posts this week</p></div><BarChart3 size={17} aria-hidden="true" /></div>
+              <div className="admin-activity-chart" role="img" aria-label="Illustrative post activity from Monday through Sunday">
+                {sampleWeeklyActivity.map(({ day, posts }) => <div className="admin-activity-chart__column" key={day}><strong>{posts}</strong><span style={{ height: `${(posts / 18) * 100}%` }} /><small>{day}</small></div>)}
+              </div>
+            </article>
+            <article className="admin-insight-card">
+              <div className="admin-section-heading"><div><h3>Review outcomes</h3><p>Current sample queue</p></div><ShieldCheck size={17} aria-hidden="true" /></div>
+              <div className="admin-outcome-row"><span>Approved</span><strong>{queue.filter((item) => item.status === "approved").length}</strong></div>
+              <div className="admin-outcome-row"><span>Needs changes</span><strong>{queue.filter((item) => item.status === "changes").length}</strong></div>
+              <div className="admin-outcome-row"><span>Pending</span><strong>{pendingCount}</strong></div>
+              <p className="admin-reward-note">Updates when a sample post is reviewed. Not live platform analytics.</p>
+            </article>
+          </div>
         </section>
 
         <section className="admin-queue admin-dashboard-section" id="review-queue">
@@ -338,7 +435,7 @@ export function AdminPage() {
             <span className="app-sample-label">{queue.length} sample profiles</span>
           </div>
           <div className="admin-member-list">
-            {queue.map((item) => (
+            {visibleMembers.map((item) => (
               <article className="admin-member-card" key={`member-${item.id}`}>
                 <span className="admin-member-card__avatar" aria-hidden="true">
                   {item.author.split(" ").map((part) => part[0]).join("")}
@@ -359,6 +456,20 @@ export function AdminPage() {
                 </Badge>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className="admin-dashboard-section" id="records">
+          <div className="admin-section-heading">
+            <div><h2>Review records</h2><p>Local demo log of moderation decisions.</p></div>
+            <Button onClick={exportReviewRecords} size="sm" variant="secondary"><Download size={15} aria-hidden="true" /> Export CSV</Button>
+          </div>
+          <div className="admin-records-table-wrap">
+            <table className="admin-records-table">
+              <thead><tr><th>Member</th><th>Sample post</th><th>Decision</th><th>Recorded</th></tr></thead>
+              <tbody>{visibleRecords.map((record) => <tr key={record.id}><td>{record.author}</td><td>{record.title}</td><td><Badge variant={record.decision === "approved" ? "success" : "info"}>{record.decision === "approved" ? "Approved" : "Changes requested"}</Badge></td><td>{record.recorded}</td></tr>)}</tbody>
+            </table>
+            {!visibleRecords.length ? <p className="admin-reward-note">No sample review records match your search.</p> : null}
           </div>
         </section>
 
