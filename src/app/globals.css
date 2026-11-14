@@ -5765,7 +5765,8 @@ a.feed-nav-item:hover {
   .feed-mobile-nav__progress { grid-column: 5; order: 0; }
   .feed-mobile-nav__profile { grid-column: 6; order: 0; }
   .feed-mobile-nav__item--settings { grid-column: 7; order: 0; }
-  .feed-mobile-nav__create--center { grid-column: 4; order: 0; justify-self: center; }
+  .feed-mobile-nav > * { grid-row: 1; }
+  .feed-mobile-nav__create--center { grid-column: 4; grid-row: 1; order: 0; justify-self: center; }
 }
 
 .admin-demo-banner {
