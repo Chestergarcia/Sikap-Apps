@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  AlertTriangle,
   ArrowLeft,
   Check,
   CircleDollarSign,
@@ -249,10 +248,9 @@ export function AdminPage() {
         </header>
 
         <div className="admin-demo-banner" role="note">
-          <AlertTriangle size={17} aria-hidden="true" />
+          <ShieldCheck size={17} aria-hidden="true" />
           <p>
-            This is a front-end preview only. There is no authentication,
-            permission check, AI verification, or live moderation queue.
+            Authentication, permission checks, verification, and live moderation are not connected yet.
           </p>
         </div>
 
@@ -553,7 +551,7 @@ export function AdminPage() {
           </section>
           <section className="rail-note">
             <span className="rail-note__icon" aria-hidden="true">
-              <AlertTriangle size={16} />
+              <ShieldCheck size={16} />
             </span>
             <p>Review actions do not publish content or trigger simulated rewards.</p>
           </section>
