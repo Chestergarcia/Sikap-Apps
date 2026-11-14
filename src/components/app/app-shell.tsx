@@ -80,6 +80,7 @@ function SoonItem({
         aria-current={activePage === id ? "page" : undefined}
         className={`feed-nav-item${activePage === id ? " feed-nav-item--active" : ""}`}
         href={href}
+        prefetch={false}
       >
         <span className="feed-nav-item__icon" aria-hidden="true">
           <Icon size={19} />
@@ -125,13 +126,13 @@ export function AppShell({
     <div className="feed-app">
       <header className="feed-topbar">
         <div className="feed-topbar__inner">
-          <Link className="feed-brand" href="/" aria-label="Sikap home">
+          <Link className="feed-brand" href="/" aria-label="Sikap home" prefetch={false}>
             <Image
               alt=""
               className="feed-brand__image"
               height={559}
               priority
-              src="/sikap-logo.png"
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sikap-logo.png`}
               width={1024}
             />
           </Link>
@@ -152,6 +153,7 @@ export function AppShell({
               aria-label="Rewards wallet"
               className="feed-topbar__shortcut"
               href="/rewards"
+              prefetch={false}
               title="Rewards wallet"
             >
               <CircleDollarSign size={19} aria-hidden="true" />
@@ -160,6 +162,7 @@ export function AppShell({
               aria-label="Notifications"
               className="feed-topbar__shortcut"
               href="/notifications"
+              prefetch={false}
               title="Notifications"
             >
               <Bell size={19} aria-hidden="true" />
@@ -185,6 +188,7 @@ export function AppShell({
                 className={`feed-nav-item${activePage === id ? " feed-nav-item--active" : ""}`}
                 href={href}
                 key={id}
+                prefetch={false}
               >
                 <span className="feed-nav-item__icon" aria-hidden="true">
                   <Icon size={19} />
@@ -228,6 +232,7 @@ export function AppShell({
               className={`feed-mobile-nav__item feed-mobile-nav__item--${id}${activePage === id ? " feed-mobile-nav__item--active" : ""}`}
               href={href}
               key={id}
+              prefetch={false}
             >
               <Icon size={19} aria-hidden="true" />
               <span>{id === "home" ? "Home" : label}</span>
@@ -237,6 +242,7 @@ export function AppShell({
           aria-current={activePage === "settings" ? "page" : undefined}
           className={`feed-mobile-nav__item feed-mobile-nav__item--settings${activePage === "settings" ? " feed-mobile-nav__item--active" : ""}`}
           href="/settings"
+          prefetch={false}
         >
           <Settings size={19} aria-hidden="true" />
           <span>More</span>
@@ -245,6 +251,7 @@ export function AppShell({
           className="feed-mobile-nav__create feed-mobile-nav__create--center"
           href="/home#compose"
           aria-label="Create a post"
+          prefetch={false}
         >
           <span aria-hidden="true"><Plus size={21} /></span>
         </Link>

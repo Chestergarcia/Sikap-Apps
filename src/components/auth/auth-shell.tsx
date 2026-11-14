@@ -41,7 +41,7 @@ export function AuthShell({
             </span>
           </div>
         </div>
-        <Link className="auth-aside__back" href="/">
+        <Link className="auth-aside__back" href="/" prefetch={false}>
           <ArrowLeft size={16} aria-hidden="true" />
           Back to Sikap
         </Link>
@@ -55,7 +55,7 @@ export function AuthShell({
           {children}
           <div className="auth-main__switch">
             {isSignUp ? "Already part of the community?" : "New to Sikap?"}{" "}
-            <Link href={isSignUp ? "/auth/login" : "/auth/sign-up"}>
+            <Link href={isSignUp ? "/auth/login" : "/auth/sign-up"} prefetch={false}>
               {isSignUp ? "Log in" : "Create an account"}
             </Link>
           </div>

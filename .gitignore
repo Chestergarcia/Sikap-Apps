@@ -15,7 +15,9 @@
 
 # next.js
 /.next/
+/.next-github-pages-build/
 /.next-phase7-check/
+/pages-build/
 /out/
 
 # production

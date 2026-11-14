@@ -6,6 +6,7 @@ import {
   AlertTriangle,
   ArrowLeft,
   Check,
+  CircleDollarSign,
   Clock3,
   FileImage,
   FileText,
@@ -13,6 +14,7 @@ import {
   Search,
   ShieldCheck,
   Users,
+  Wallet,
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -39,7 +41,7 @@ const initialQueue: ReviewItem[] = [
     title: "Finished the first wireframe for my portfolio project",
     type: "Photo",
     submitted: "12 min ago",
-    status: "pending",
+    status: "approved",
   },
   {
     id: "review-workout",
@@ -57,7 +59,7 @@ const initialQueue: ReviewItem[] = [
     title: "A small JavaScript lesson from today",
     type: "Video",
     submitted: "1 hour ago",
-    status: "pending",
+    status: "approved",
   },
 ];
 
@@ -80,6 +82,19 @@ export function AdminPage() {
 
   const pendingCount = queue.filter((item) => item.status === "pending").length;
   const reviewedCount = queue.length - pendingCount;
+  const sampleRewardValue = queue
+    .filter((item) => item.status === "approved")
+    .reduce((total, item) => total + (item.type === "Video" ? 5 : 1), 0);
+  const categoryCounts = [...new Set(queue.map((item) => item.category))].map(
+    (category) => ({
+      category,
+      count: queue.filter((item) => item.category === category).length,
+    }),
+  );
+  const maxCategoryPosts = Math.max(
+    1,
+    ...categoryCounts.map((item) => item.count),
+  );
   const visibleQueue = useMemo(() => {
     const search = query.trim().toLowerCase();
     return queue.filter((item) => {
@@ -112,13 +127,13 @@ export function AdminPage() {
     <div className="admin-console">
       <header className="admin-topbar">
         <div className="admin-topbar__inner">
-          <Link className="admin-brand" href="/admin" aria-label="SIKAP admin preview">
+          <Link className="admin-brand" href="/admin" aria-label="SIKAP admin preview" prefetch={false}>
             <Image
               alt=""
               className="admin-brand__image"
               height={559}
               priority
-              src="/sikap-logo.png"
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sikap-logo.png`}
               width={1024}
             />
             <span className="admin-brand__label">ADMIN</span>
@@ -133,7 +148,7 @@ export function AdminPage() {
               value={query}
             />
           </label>
-          <Link className="button button--secondary button--md admin-topbar__back" href="/home">
+          <Link className="button button--secondary button--md admin-topbar__back" href="/home" prefetch={false}>
             <ArrowLeft size={16} aria-hidden="true" />
             Back to community
           </Link>
@@ -147,8 +162,8 @@ export function AdminPage() {
             <p className="eyebrow">
               <ShieldCheck size={15} aria-hidden="true" /> ADMIN PREVIEW
             </p>
-            <h1>Community review</h1>
-            <p>Sample moderation tools for a future community team.</p>
+            <h1>Admin dashboard</h1>
+            <p>Community activity, member snapshots, review queue, and rewards.</p>
           </div>
           <Badge variant="info">Demo data · no real admin access</Badge>
         </header>
@@ -168,34 +183,59 @@ export function AdminPage() {
           </p>
         ) : null}
 
+        <nav className="admin-section-nav" aria-label="Admin dashboard sections">
+          <a href="#overview">Overview</a>
+          <a href="#review-queue">Post review</a>
+          <a href="#members">Members</a>
+          <a href="#community-pulse">Community pulse</a>
+          <a href="#rewards">Rewards</a>
+        </nav>
+
+        <section className="admin-dashboard-section" id="overview">
+          <div className="admin-section-heading">
+            <div>
+              <h2>Community overview</h2>
+              <p>Current sample totals for this front-end preview.</p>
+            </div>
+            <span className="app-sample-label">Illustrative data</span>
+          </div>
         <section className="admin-metrics" aria-label="Sample community metrics">
           <article className="admin-metric">
             <span className="admin-metric__icon admin-metric__icon--blue" aria-hidden="true">
               <Users size={18} />
             </span>
             <span className="admin-metric__value">248</span>
-            <span className="admin-metric__label">Sample members</span>
-            <small>Illustrative total</small>
+            <span className="admin-metric__label">Community members</span>
+            <small>Sample total</small>
+          </article>
+          <article className="admin-metric">
+            <span className="admin-metric__icon admin-metric__icon--amber" aria-hidden="true">
+              <FileText size={18} />
+            </span>
+            <span className="admin-metric__value">{queue.length}</span>
+            <span className="admin-metric__label">Sample posts</span>
+            <small>Across {categoryCounts.length} topics</small>
           </article>
           <article className="admin-metric">
             <span className="admin-metric__icon admin-metric__icon--amber" aria-hidden="true">
               <Clock3 size={18} />
             </span>
             <span className="admin-metric__value">{pendingCount}</span>
-            <span className="admin-metric__label">Sample posts to review</span>
-            <small>Local queue only</small>
+            <span className="admin-metric__label">Needs review</span>
+            <small>{reviewedCount} reviewed in this demo</small>
           </article>
           <article className="admin-metric">
             <span className="admin-metric__icon admin-metric__icon--green" aria-hidden="true">
-              <Check size={18} />
+              <CircleDollarSign size={18} />
             </span>
-            <span className="admin-metric__value">{reviewedCount}</span>
-            <span className="admin-metric__label">Reviewed in this demo</span>
-            <small>Resets when you leave</small>
+            <span className="admin-metric__value">₱{sampleRewardValue}</span>
+            <span className="admin-metric__label">Sample reward value</span>
+            <small>Illustrative only · not issued</small>
           </article>
         </section>
+        </section>
 
-        <section className="admin-queue">
+        <section className="admin-queue admin-dashboard-section" id="review-queue">
           <div className="app-section-heading">
             <div>
               <h2>Post review queue</h2>
@@ -287,6 +327,102 @@ export function AdminPage() {
               </button>
             </div>
           )}
+        </section>
+
+        <section className="admin-dashboard-section" id="members">
+          <div className="admin-section-heading">
+            <div>
+              <h2>Member snapshots</h2>
+              <p>People represented in the current sample review queue.</p>
+            </div>
+            <span className="app-sample-label">{queue.length} sample profiles</span>
+          </div>
+          <div className="admin-member-list">
+            {queue.map((item) => (
+              <article className="admin-member-card" key={`member-${item.id}`}>
+                <span className="admin-member-card__avatar" aria-hidden="true">
+                  {item.author.split(" ").map((part) => part[0]).join("")}
+                </span>
+                <span className="admin-member-card__identity">
+                  <strong>{item.author}</strong>
+                  <small>{item.category} · Community member</small>
+                </span>
+                <span className="admin-member-card__post">{item.title}</span>
+                <Badge
+                  variant={item.status === "approved" ? "success" : "info"}
+                >
+                  {item.status === "pending"
+                    ? "Pending review"
+                    : item.status === "approved"
+                      ? "Reviewed"
+                      : "Changes requested"}
+                </Badge>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="admin-insights-grid" id="community-pulse">
+          <article className="admin-insight-card">
+            <div className="admin-section-heading">
+              <div>
+                <h2>Community pulse</h2>
+                <p>Sample posts by growth topic.</p>
+              </div>
+              <Users size={17} aria-hidden="true" />
+            </div>
+            <div className="admin-topic-list">
+              {categoryCounts.map(({ category, count }) => (
+                <div className="admin-topic-row" key={category}>
+                  <span>{category}</span>
+                  <span className="admin-topic-row__track">
+                    <span
+                      style={{
+                        width: `${(count / maxCategoryPosts) * 100}%`,
+                      }}
+                    />
+                  </span>
+                  <strong>{count}</strong>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <article className="admin-insight-card" id="rewards">
+            <div className="admin-section-heading">
+              <div>
+                <h2>Reward guide</h2>
+                <p>Simulated examples from approved sample posts.</p>
+              </div>
+              <Wallet size={17} aria-hidden="true" />
+            </div>
+            <div className="admin-reward-row">
+              <span><FileText size={15} aria-hidden="true" /> Text or photo</span>
+              <strong>₱1 · simulated</strong>
+            </div>
+            <div className="admin-reward-row">
+              <span><Play size={15} aria-hidden="true" /> Video</span>
+              <strong>₱5 · simulated</strong>
+            </div>
+            <div className="admin-reward-total">
+              <span>Approved sample value</span>
+              <strong>₱{sampleRewardValue}</strong>
+            </div>
+            <p className="admin-reward-note">
+              No money is transferred or guaranteed. Demo review actions do not issue rewards.
+            </p>
+          </article>
+        </section>
+
+        <section className="admin-safety-note" id="safety">
+          <ShieldCheck size={18} aria-hidden="true" />
+          <div>
+            <h2>Safety and review</h2>
+            <p>
+              AI verification, reports, account controls, and moderation services
+              are not connected. Sample posts and decisions stay in this page only.
+            </p>
+          </div>
         </section>
         </main>
         <aside className="admin-side-rail" aria-label="Review guidance">

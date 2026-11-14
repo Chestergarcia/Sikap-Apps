@@ -198,9 +198,10 @@ export function HomeFeed() {
   }
 
   async function sharePost(postId: string) {
-    const url = `${window.location.origin}/home#post-${postId}`;
+    const url = new URL(window.location.href);
+    url.hash = `post-${postId}`;
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(url.toString());
       setNotice("Post link copied to clipboard.");
     } catch {
       setNotice("Could not copy the link. You can copy it from the address bar.");
@@ -372,7 +373,9 @@ export function HomeFeed() {
                     {post.reviewState === "verified-sample" ? (
                       <>
                         <Badge variant="success" icon={<Check size={13} />}>Verified sample</Badge>
-                        <Badge variant="reward" icon={<CircleDollarSign size={13} />}>Simulated +₱1</Badge>
+                        <Badge variant="reward" icon={<CircleDollarSign size={13} />}>
+                          Simulated +₱{post.media === "video" ? 5 : 1}
+                        </Badge>
                         <span className="feed-post__review-note">Example only</span>
                       </>
                     ) : (

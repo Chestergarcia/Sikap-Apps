@@ -229,6 +229,7 @@ export function NotificationsPage() {
                       className="notification-item__link"
                       href={notification.href}
                       onClick={() => markRead(notification.id)}
+                      prefetch={false}
                     >
                       <strong>{notification.title}</strong>
                       <span>{notification.detail}</span>

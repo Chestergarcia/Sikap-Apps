@@ -31,7 +31,7 @@ export default function DesignSystemPreview() {
             className="brand-lockup__image"
             height={559}
             priority
-            src="/sikap-logo.png"
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sikap-logo.png`}
             width={1024}
           />
         </a>

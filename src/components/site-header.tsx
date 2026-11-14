@@ -12,10 +12,10 @@ export function SiteHeader() {
           <a href="#rewards">Rewards</a>
         </nav>
         <div className="site-header__actions">
-          <Link className="site-header__login" href="/auth/login">
+          <Link className="site-header__login" href="/auth/login" prefetch={false}>
             Log in
           </Link>
-          <Link className="button button--primary button--sm" href="/auth/sign-up">
+          <Link className="button button--primary button--sm" href="/auth/sign-up" prefetch={false}>
             Join Sikap
           </Link>
         </div>

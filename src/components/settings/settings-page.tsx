@@ -175,7 +175,7 @@ export function SettingsPage() {
                 <span>Email</span>
                 <strong>alex@example.test</strong>
               </div>
-              <Link className="button button--secondary button--md" href="/profile">
+              <Link className="button button--secondary button--md" href="/profile" prefetch={false}>
                 Edit public profile
               </Link>
             </div>

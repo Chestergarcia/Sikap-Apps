@@ -141,7 +141,7 @@ export function ProfilePage() {
                 <Edit3 size={15} aria-hidden="true" />
                 Edit profile
               </Button>
-              <Link className="button button--primary" href="/home#compose">
+              <Link className="button button--primary" href="/home#compose" prefetch={false}>
                 Share progress
               </Link>
             </div>

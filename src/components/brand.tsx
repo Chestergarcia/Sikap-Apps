@@ -11,13 +11,14 @@ export function Brand({ light = false }: BrandProps) {
       aria-label="Sikap home"
       className={`brand-lockup${light ? " brand-lockup--light" : ""}`}
       href="/"
+      prefetch={false}
     >
       <Image
         alt=""
         className="brand-lockup__image"
         height={559}
         priority
-        src="/sikap-logo.png"
+        src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sikap-logo.png`}
         width={1024}
       />
     </Link>
