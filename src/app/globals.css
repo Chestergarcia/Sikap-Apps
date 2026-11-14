@@ -4750,6 +4750,24 @@ a.feed-nav-item:hover {
   order: 6;
 }
 
+.feed-mobile-create-fab {
+  position: fixed;
+  z-index: 31;
+  right: 24px;
+  bottom: 24px;
+  display: grid;
+  width: 54px;
+  height: 54px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--primary-600);
+  color: #fff;
+  box-shadow: 0 5px 16px rgb(37 99 235 / 32%);
+  text-decoration: none;
+}
+
+.feed-mobile-create-fab:hover { background: var(--primary-700); }
+
 .settings-page,
 .admin-page {
   gap: 18px;
@@ -5755,27 +5773,7 @@ a.feed-nav-item:hover {
   }
 
   .feed-mobile-nav__item { width: auto; min-width: 0; flex: 1 1 0; }
-  .feed-mobile-create-fab {
-    position: fixed;
-    z-index: 31;
-    right: 16px;
-    bottom: calc(78px + env(safe-area-inset-bottom));
-    display: grid;
-    width: 54px;
-    height: 54px;
-    place-items: center;
-    border-radius: 50%;
-    background: var(--primary-600);
-    color: #fff;
-    box-shadow: 0 5px 16px rgb(37 99 235 / 32%);
-    text-decoration: none;
-  }
-
-  .feed-mobile-create-fab:hover { background: var(--primary-700); }
-}
-
-@media (min-width: 761px) {
-  .feed-mobile-create-fab { display: none; }
+  .feed-mobile-create-fab { right: 16px; bottom: calc(78px + env(safe-area-inset-bottom)); }
 }
 
 .admin-demo-banner {
