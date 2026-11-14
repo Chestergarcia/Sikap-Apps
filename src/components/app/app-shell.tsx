@@ -224,34 +224,9 @@ export function AppShell({
       </div>
 
       <nav className="feed-mobile-nav" aria-label="Mobile navigation">
-        <div className="feed-mobile-nav__group feed-mobile-nav__group--left">
-          {primaryNavigation
-            .filter((item) => item.id === "home" || item.id === "explore")
-            .map(({ href, icon: Icon, id, label }) => (
-              <Link
-                aria-current={activePage === id ? "page" : undefined}
-                className={`feed-mobile-nav__item feed-mobile-nav__item--${id}${activePage === id ? " feed-mobile-nav__item--active" : ""}`}
-                href={href}
-                key={id}
-                prefetch={false}
-              >
-                <Icon size={19} aria-hidden="true" />
-                <span>{id === "home" ? "Home" : label}</span>
-              </Link>
-            ))}
-        </div>
-        <Link
-          className="feed-mobile-nav__create feed-mobile-nav__create--center"
-          href="/home#compose"
-          aria-label="Create a post"
-          prefetch={false}
-        >
-          <span aria-hidden="true"><Plus size={21} /></span>
-        </Link>
-        <div className="feed-mobile-nav__group feed-mobile-nav__group--right">
-          {primaryNavigation
-            .filter((item) => item.id === "progress" || item.id === "profile")
-            .map(({ href, icon: Icon, id, label }) => (
+        {primaryNavigation
+          .filter((item) => item.id !== "create")
+          .map(({ href, icon: Icon, id, label }) => (
             <Link
               aria-current={activePage === id ? "page" : undefined}
               className={`feed-mobile-nav__item feed-mobile-nav__item--${id}${activePage === id ? " feed-mobile-nav__item--active" : ""}`}
@@ -263,17 +238,24 @@ export function AppShell({
               <span>{id === "home" ? "Home" : label}</span>
             </Link>
           ))}
-          <Link
-            aria-current={activePage === "settings" ? "page" : undefined}
-            className={`feed-mobile-nav__item feed-mobile-nav__item--settings${activePage === "settings" ? " feed-mobile-nav__item--active" : ""}`}
-            href="/settings"
-            prefetch={false}
-          >
-            <Settings size={19} aria-hidden="true" />
-            <span>More</span>
-          </Link>
-        </div>
+        <Link
+          aria-current={activePage === "settings" ? "page" : undefined}
+          className={`feed-mobile-nav__item feed-mobile-nav__item--settings${activePage === "settings" ? " feed-mobile-nav__item--active" : ""}`}
+          href="/settings"
+          prefetch={false}
+        >
+          <Settings size={19} aria-hidden="true" />
+          <span>More</span>
+        </Link>
       </nav>
+      <Link
+        className="feed-mobile-create-fab"
+        href="/home#compose"
+        aria-label="Create a post"
+        prefetch={false}
+      >
+        <Plus size={23} aria-hidden="true" />
+      </Link>
     </div>
   );
 }
