@@ -5749,24 +5749,22 @@ a.feed-nav-item:hover {
 
 @media (max-width: 760px) {
   .feed-mobile-nav {
-    display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    justify-items: center;
-    justify-content: stretch;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
   }
 
-  .feed-mobile-nav__item {
-    width: 100%;
+  .feed-mobile-nav__group {
+    display: flex;
+    flex: 1 1 0;
+    align-items: center;
+    justify-content: space-around;
     min-width: 0;
   }
 
-  .feed-mobile-nav__home { grid-column: 1; order: 0; }
-  .feed-mobile-nav__explore { grid-column: 2; order: 0; }
-  .feed-mobile-nav__progress { grid-column: 5; order: 0; }
-  .feed-mobile-nav__profile { grid-column: 6; order: 0; }
-  .feed-mobile-nav__item--settings { grid-column: 7; order: 0; }
-  .feed-mobile-nav > * { grid-row: 1; }
-  .feed-mobile-nav__create--center { grid-column: 4; grid-row: 1; order: 0; justify-self: center; }
+  .feed-mobile-nav__item { width: auto; min-width: 0; flex: 1 1 0; }
+
+  .feed-mobile-nav__create--center { position: static; flex: 0 0 44px; order: 0; transform: none; }
 }
 
 .admin-demo-banner {
