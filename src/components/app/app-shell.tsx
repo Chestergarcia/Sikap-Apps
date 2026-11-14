@@ -168,8 +168,6 @@ export function AppShell({
               <Bell size={19} aria-hidden="true" />
             </Link>
             <span className="feed-demo-label">DEMO</span>
-            <Avatar initials="AR" name="Alex Rivera" size="sm" />
-            <span className="feed-topbar__name">Alex Rivera</span>
           </div>
         </div>
       </header>
