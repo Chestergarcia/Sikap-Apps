@@ -5973,7 +5973,7 @@ a.feed-nav-item:hover {
   .admin-topbar__inner { grid-template-columns: 40px minmax(0, 1fr) auto; }
   .admin-mobile-menu { grid-column: 1; grid-row: 1; }
   .admin-topbar .admin-brand { display: none; }
-  .admin-topbar__back { grid-column: 3; grid-row: 1; width: 40px; height: 40px; justify-content: center; gap: 0; padding: 0; overflow: hidden; font-size: 0; }
+  .admin-topbar__back { grid-column: 3; grid-row: 1; width: auto; min-width: max-content; height: 40px; justify-content: center; gap: 7px; padding: 0 11px; overflow: visible; font-size: 11px; white-space: nowrap; }
   .admin-topbar__back svg { flex: 0 0 auto; }
 }
 
