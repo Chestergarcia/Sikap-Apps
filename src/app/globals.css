@@ -5915,6 +5915,9 @@ a.feed-nav-item:hover {
 .admin-mobile-menu,
 .admin-sidebar__drawer-header { display: none; }
 
+.admin-sidebar__brand { display: flex; min-height: 52px; align-items: center; justify-content: flex-start; padding: 0 8px; box-shadow: none; }
+.admin-sidebar__brand .admin-brand__image { width: 132px; height: 78px; }
+
 .admin-sidebar__backdrop { display: none; }
 
 .admin-section-nav {
@@ -5969,7 +5972,7 @@ a.feed-nav-item:hover {
 @media (max-width: 760px) {
   .admin-topbar__inner { grid-template-columns: 40px minmax(0, 1fr) auto; }
   .admin-mobile-menu { grid-column: 1; grid-row: 1; }
-  .admin-brand { grid-column: 2; grid-row: 1; }
+  .admin-topbar .admin-brand { display: none; }
   .admin-topbar__back { grid-column: 3; grid-row: 1; width: 40px; height: 40px; justify-content: center; gap: 0; padding: 0; overflow: hidden; font-size: 0; }
   .admin-topbar__back svg { flex: 0 0 auto; }
 }
