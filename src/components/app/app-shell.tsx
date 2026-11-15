@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import {
   Activity,
   Bell,
@@ -17,6 +16,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, type ReactNode } from "react";
 import type { Route } from "next";
+import { BrandWordmark } from "@/components/brand-wordmark";
 import { Avatar } from "@/components/ui/avatar";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -128,14 +128,7 @@ export function AppShell({
       <header className="feed-topbar">
         <div className="feed-topbar__inner">
           <Link className="feed-brand" href="/" aria-label="Sikap home" prefetch={false}>
-            <Image
-              alt=""
-              className="feed-brand__image"
-              height={268}
-              priority
-              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sikap-logo-cropped.png`}
-              width={274}
-            />
+            <BrandWordmark />
           </Link>
           <label className="feed-search">
             <Search size={18} aria-hidden="true" />

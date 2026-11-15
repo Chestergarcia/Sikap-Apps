@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -22,6 +21,7 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { BrandWordmark } from "@/components/brand-wordmark";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -217,14 +217,7 @@ export function AdminPage({ section = "overview" }: { section?: AdminSection }) 
             {sidebarOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
           </button>
           <Link className="admin-brand" href="/admin" aria-label="SIKAP admin preview" prefetch={false}>
-            <Image
-              alt=""
-              className="admin-brand__image"
-              height={268}
-              priority
-              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sikap-logo-cropped.png`}
-              width={274}
-            />
+            <BrandWordmark />
           </Link>
           <label className="feed-search admin-topbar__search">
             <Search size={18} aria-hidden="true" />
@@ -250,7 +243,7 @@ export function AdminPage({ section = "overview" }: { section?: AdminSection }) 
         {sidebarOpen ? <button aria-label="Close admin navigation" className="admin-sidebar__backdrop" onClick={() => setSidebarOpen(false)} type="button" /> : null}
         <aside className={`admin-sidebar${sidebarOpen ? " admin-sidebar--open" : ""}`} aria-label="Admin navigation">
           <p className="admin-sidebar__title">Workspace</p>
-          <div className="admin-sidebar__drawer-header"><Link className="admin-brand admin-sidebar__brand" href="/admin" aria-label="SIKAP admin dashboard" prefetch={false}><Image alt="SIKAP" className="admin-brand__image" height={268} src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sikap-logo-cropped.png`} width={274} /></Link><button aria-label="Close admin navigation" onClick={() => setSidebarOpen(false)} type="button"><X size={18} aria-hidden="true" /></button></div>
+          <div className="admin-sidebar__drawer-header"><Link className="admin-brand admin-sidebar__brand" href="/admin" aria-label="SIKAP admin dashboard" prefetch={false}><BrandWordmark /></Link><button aria-label="Close admin navigation" onClick={() => setSidebarOpen(false)} type="button"><X size={18} aria-hidden="true" /></button></div>
           <nav className="admin-section-nav" id="admin-section-links" aria-label="Admin dashboard sections">
             <Link aria-current={section === "overview" ? "page" : undefined} className={section === "overview" ? "is-active" : undefined} href={adminRoutes.overview} onClick={() => setSidebarOpen(false)}><LayoutDashboard size={17} aria-hidden="true" />Dashboard</Link>
             <Link aria-current={section === "review-queue" ? "page" : undefined} className={section === "review-queue" ? "is-active" : undefined} href={adminRoutes["review-queue"]} onClick={() => setSidebarOpen(false)}><FileText size={17} aria-hidden="true" />Content review<span className="admin-sidebar__count">{pendingCount}</span></Link>

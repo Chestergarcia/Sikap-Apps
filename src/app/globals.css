@@ -120,11 +120,7 @@ a {
   text-decoration: none;
 }
 
-.brand-lockup__image {
-  display: block;
-  width: 64px;
-  height: auto;
-}
+.brand-wordmark { display: inline-block; color: var(--primary-700); font-size: 23px; font-weight: 800; letter-spacing: .08em; line-height: 1; }
 
 .preview-meta {
   display: flex;
@@ -1059,9 +1055,7 @@ a {
   color: #fff;
 }
 
-.brand-lockup--light .brand-lockup__image {
-  filter: brightness(0) invert(1);
-}
+.brand-lockup--light .brand-wordmark { color: #fff; }
 
 .landing-page {
   overflow: hidden;
@@ -1972,10 +1966,6 @@ a {
     gap: 8px;
   }
 
-  .brand-lockup__image {
-    width: 56px;
-  }
-
   .site-header__actions {
     gap: 10px;
   }
@@ -2099,12 +2089,7 @@ a {
   text-decoration: none;
 }
 
-.feed-brand__image {
-  display: block;
-  width: 60px;
-  height: auto;
-  padding: 3px;
-}
+.feed-brand .brand-wordmark { font-size: 20px; }
 
 .feed-search {
   display: flex;
@@ -3200,10 +3185,6 @@ a.feed-nav-item:hover {
   .feed-topbar__inner {
     width: min(100% - 24px, 400px);
     gap: 8px;
-  }
-
-  .feed-brand__image {
-    width: 56px;
   }
 
   .feed-search {
@@ -5487,13 +5468,7 @@ a.feed-nav-item:hover {
   text-decoration: none;
 }
 
-.admin-brand__image {
-  display: block;
-  width: 62px;
-  height: 62px;
-  padding: 3px;
-  object-fit: contain;
-}
+.admin-brand .brand-wordmark { font-size: 21px; }
 
 .admin-topbar__actions { display: flex; align-items: center; gap: 9px; }
 
@@ -5628,8 +5603,6 @@ a.feed-nav-item:hover {
   }
 
   .admin-topbar__inner { min-height: 0; padding: 8px 0; }
-
-  .admin-brand__image { width: 56px; height: 56px; }
 
   .admin-layout {
     width: min(100% - 32px, 640px);
@@ -5798,7 +5771,6 @@ a.feed-nav-item:hover {
 
 @media (max-width: 760px) {
   .feed-topbar__inner { min-height: 76px; }
-  .feed-brand__image { width: 56px; }
   .theme-toggle { width: 40px; min-width: 40px; padding: 0; }
   .theme-toggle span { display: none; }
   .admin-topbar__actions { gap: 6px; }
@@ -5916,7 +5888,7 @@ a.feed-nav-item:hover {
 .admin-sidebar__drawer-header { display: none; }
 
 .admin-sidebar__brand { display: flex; min-height: 52px; align-items: center; justify-content: flex-start; padding: 0 8px; box-shadow: none; }
-.admin-sidebar__brand .admin-brand__image { width: 132px; height: 78px; }
+.admin-sidebar__brand .brand-wordmark { font-size: 22px; }
 
 .admin-sidebar__backdrop { display: none; }
 
@@ -6073,12 +6045,8 @@ html[data-theme="dark"] .brand-lockup {
   background: transparent;
 }
 
-html[data-theme="dark"] .brand-lockup__image,
-html[data-theme="dark"] .feed-brand__image,
-html[data-theme="dark"] .admin-brand__image {
-  filter: brightness(0) invert(1) !important;
-  background: transparent !important;
-}
+.feed-app[data-theme="dark"] .feed-brand .brand-wordmark,
+.admin-console[data-theme="dark"] .admin-brand .brand-wordmark { color: #fff; }
 
 @media (max-width: 760px) {
   .feed-mobile-create-fab { display: grid; }

@@ -5,7 +5,7 @@ import {
   Eye,
   ShieldCheck,
 } from "lucide-react";
-import Image from "next/image";
+import { BrandWordmark } from "@/components/brand-wordmark";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -26,14 +26,7 @@ export default function DesignSystemPreview() {
     <main className="preview-shell">
       <header className="preview-header">
         <a className="brand-lockup" href="#top" aria-label="Sikap design preview">
-          <Image
-            alt=""
-            className="brand-lockup__image"
-            height={559}
-            priority
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/sikap-logo.png`}
-            width={1024}
-          />
+          <BrandWordmark />
         </a>
         <div className="preview-meta" aria-label="Phase 2 design-system preview">
           <span>Design system</span>
