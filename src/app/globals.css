@@ -5972,6 +5972,7 @@ a.feed-nav-item:hover {
 @media (max-width: 760px) {
   .admin-topbar__inner { grid-template-columns: 40px minmax(0, 1fr) auto; }
   .admin-mobile-menu { grid-column: 1; grid-row: 1; }
+  .admin-topbar__actions { grid-column: 3; grid-row: 1; justify-self: end; }
   .admin-topbar .admin-brand { display: none; }
   .admin-topbar__back { grid-column: 3; grid-row: 1; width: auto; min-width: max-content; height: 40px; justify-content: center; gap: 7px; padding: 0 11px; overflow: visible; font-size: 11px; white-space: nowrap; }
   .admin-topbar__back svg { flex: 0 0 auto; }
@@ -6065,18 +6066,11 @@ a.feed-nav-item:hover {
 .feed-app[data-theme="dark"] .badge--warning,
 .admin-console[data-theme="dark"] .badge--warning { border-color: #76551a; background: #382a12; color: #fcd34d; }
 .feed-app[data-theme="dark"] .feed-brand,
-.admin-console[data-theme="dark"] .admin-brand {
-  padding: 0;
-  background: transparent;
-}
-.feed-app[data-theme="dark"] .feed-brand__image,
-.admin-console[data-theme="dark"] .admin-brand__image,
-html[data-theme="dark"] .brand-lockup__image,
-html[data-theme="dark"] .feed-brand__image,
-html[data-theme="dark"] .admin-brand__image {
-  filter: brightness(0) invert(1);
-  border-radius: 8px;
-  background: #0b1220;
+.admin-console[data-theme="dark"] .admin-brand,
+html[data-theme="dark"] .brand-lockup {
+  padding: 4px 6px;
+  border-radius: 10px;
+  background: #fff;
 }
 
 @media (max-width: 760px) {
