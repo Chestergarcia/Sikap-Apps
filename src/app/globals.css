@@ -4769,6 +4769,9 @@ a.feed-nav-item:hover {
 
 .feed-mobile-create-fab:hover { background: var(--primary-700); }
 
+/* The floating create action belongs to the mobile navigation only. */
+.feed-mobile-create-fab { display: none; }
+
 .settings-page,
 .admin-page {
   gap: 18px;
@@ -6066,6 +6069,7 @@ a.feed-nav-item:hover {
 }
 
 @media (max-width: 760px) {
+  .feed-mobile-create-fab { display: grid; }
   .theme-toggle-menu { width: min(184px, calc(100vw - 24px)); }
   .feed-topbar__account { gap: 6px; }
 }
