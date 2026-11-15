@@ -6068,15 +6068,15 @@ a.feed-nav-item:hover {
 .feed-app[data-theme="dark"] .feed-brand,
 .admin-console[data-theme="dark"] .admin-brand,
 html[data-theme="dark"] .brand-lockup {
-  padding: 4px 6px;
-  border-radius: 10px;
-  background: #fff;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 html[data-theme="dark"] .brand-lockup__image,
 html[data-theme="dark"] .feed-brand__image,
 html[data-theme="dark"] .admin-brand__image {
-  filter: none !important;
+  filter: brightness(0) invert(1) !important;
   background: transparent !important;
 }
 
