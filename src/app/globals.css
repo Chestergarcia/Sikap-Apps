@@ -5970,11 +5970,11 @@ a.feed-nav-item:hover {
 }
 
 @media (max-width: 760px) {
-  .admin-topbar__inner { grid-template-columns: 40px minmax(0, 1fr) auto; }
+  .admin-topbar__inner { grid-template-columns: 40px minmax(0, 1fr); column-gap: 12px; }
   .admin-mobile-menu { grid-column: 1; grid-row: 1; }
-  .admin-topbar__actions { grid-column: 3; grid-row: 1; justify-self: end; }
+  .admin-topbar__actions { grid-column: 2; grid-row: 1; justify-self: end; margin-left: 12px; }
   .admin-topbar .admin-brand { display: none; }
-  .admin-topbar__back { grid-column: 3; grid-row: 1; width: auto; min-width: max-content; height: 40px; justify-content: center; gap: 7px; padding: 0 11px; overflow: visible; font-size: 11px; white-space: nowrap; }
+  .admin-topbar__back { width: auto; min-width: max-content; height: 40px; justify-content: center; gap: 7px; padding: 0 11px; overflow: visible; font-size: 11px; white-space: nowrap; }
   .admin-topbar__back svg { flex: 0 0 auto; }
 }
 
@@ -6071,6 +6071,13 @@ html[data-theme="dark"] .brand-lockup {
   padding: 4px 6px;
   border-radius: 10px;
   background: #fff;
+}
+
+html[data-theme="dark"] .brand-lockup__image,
+html[data-theme="dark"] .feed-brand__image,
+html[data-theme="dark"] .admin-brand__image {
+  filter: none !important;
+  background: transparent !important;
 }
 
 @media (max-width: 760px) {
