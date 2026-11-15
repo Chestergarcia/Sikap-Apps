@@ -11,6 +11,7 @@ export function ThemeToggle() {
 
   function applyTheme(theme: Theme) {
     window.localStorage.setItem("sikap-theme", theme);
+    document.documentElement.dataset.theme = theme;
     document.querySelectorAll<HTMLElement>(".feed-app, .admin-console").forEach((app) => {
       app.dataset.theme = theme;
     });
@@ -23,6 +24,7 @@ export function ThemeToggle() {
   useEffect(() => {
     const savedTheme = window.localStorage.getItem("sikap-theme");
     const nextTheme: Theme = savedTheme === "dark" ? "dark" : "light";
+    document.documentElement.dataset.theme = nextTheme;
     document.querySelectorAll<HTMLElement>(".feed-app, .admin-console").forEach((app) => {
       app.dataset.theme = nextTheme;
     });

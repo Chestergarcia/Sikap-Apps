@@ -6067,7 +6067,14 @@ a.feed-nav-item:hover {
   background: transparent;
 }
 .feed-app[data-theme="dark"] .feed-brand__image,
-.admin-console[data-theme="dark"] .admin-brand__image { filter: brightness(0) invert(1); }
+.admin-console[data-theme="dark"] .admin-brand__image,
+html[data-theme="dark"] .brand-lockup__image,
+html[data-theme="dark"] .feed-brand__image,
+html[data-theme="dark"] .admin-brand__image {
+  filter: brightness(0) invert(1);
+  border-radius: 8px;
+  background: #0b1220;
+}
 
 @media (max-width: 760px) {
   .feed-mobile-create-fab { display: grid; }
