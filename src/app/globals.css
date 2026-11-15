@@ -5646,9 +5646,7 @@ a.feed-nav-item:hover {
 }
 
 .feed-app[data-theme="dark"] .feed-topbar,
-.feed-app[data-theme="dark"] .feed-sidebar,
 .feed-app[data-theme="dark"] .feed-mobile-nav,
-.feed-app[data-theme="dark"] .feed-rail,
 .feed-app[data-theme="dark"] .feed-post,
 .feed-app[data-theme="dark"] .feed-comments,
 .feed-app[data-theme="dark"] .settings-card,
@@ -5666,6 +5664,12 @@ a.feed-nav-item:hover {
   border-color: var(--neutral-200);
   background-color: var(--surface-card);
   color: var(--text-primary);
+}
+
+.feed-app[data-theme="dark"] .feed-sidebar,
+.feed-app[data-theme="dark"] .feed-rail {
+  border-color: transparent;
+  background-color: transparent;
 }
 
 .feed-app[data-theme="dark"] .feed-topbar,
