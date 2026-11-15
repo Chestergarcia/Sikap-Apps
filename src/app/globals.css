@@ -6063,10 +6063,11 @@ a.feed-nav-item:hover {
 .admin-console[data-theme="dark"] .badge--warning { border-color: #76551a; background: #382a12; color: #fcd34d; }
 .feed-app[data-theme="dark"] .feed-brand,
 .admin-console[data-theme="dark"] .admin-brand {
-  padding: 3px 6px;
-  border-radius: 9px;
-  background: #fff;
+  padding: 0;
+  background: transparent;
 }
+.feed-app[data-theme="dark"] .feed-brand__image,
+.admin-console[data-theme="dark"] .admin-brand__image { filter: brightness(0) invert(1); }
 
 @media (max-width: 760px) {
   .feed-mobile-create-fab { display: grid; }
