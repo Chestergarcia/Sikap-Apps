@@ -5048,8 +5048,9 @@ a.feed-nav-item:hover {
 
 .admin-metrics {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 12px;
 }
 
 .admin-metric {
@@ -5113,6 +5114,11 @@ a.feed-nav-item:hover {
   margin-top: 6px;
   color: var(--neutral-400);
   font-size: 10px;
+}
+
+@media (max-width: 1127px) {
+  .admin-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .admin-metric:last-child { grid-column: 1 / -1; }
 }
 
 .admin-queue {
