@@ -18,6 +18,7 @@ import {
 import { useEffect, useRef, type ReactNode } from "react";
 import type { Route } from "next";
 import { Avatar } from "@/components/ui/avatar";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 type AppPage =
   | "home"
@@ -149,6 +150,7 @@ export function AppShell({
             <kbd>Ctrl / ⌘ K</kbd>
           </label>
           <div className="feed-topbar__account">
+            <ThemeToggle />
             <Link
               aria-label="Rewards wallet"
               className="feed-topbar__shortcut"

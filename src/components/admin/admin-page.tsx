@@ -24,6 +24,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 type ReviewStatus = "pending" | "approved" | "changes";
 type ReviewFilter = "All sample posts" | "Needs review" | "Reviewed";
@@ -92,7 +93,31 @@ function ReviewTypeIcon({ type }: { type: ReviewItem["type"] }) {
   return <Icon size={16} aria-hidden="true" />;
 }
 
-export function AdminPage() {
+export type AdminSection = "overview" | "review-queue" | "members" | "analytics" | "records" | "community-pulse" | "rewards" | "safety";
+
+const adminRoutes: Record<AdminSection, string> = {
+  overview: "/admin",
+  "review-queue": "/admin/content",
+  members: "/admin/members",
+  analytics: "/admin/analytics",
+  records: "/admin/records",
+  "community-pulse": "/admin/community",
+  rewards: "/admin/rewards",
+  safety: "/admin/safety",
+};
+
+const adminSectionTitles: Record<AdminSection, string> = {
+  overview: "Admin dashboard",
+  "review-queue": "Content review",
+  members: "Members",
+  analytics: "Analytics",
+  records: "Review records",
+  "community-pulse": "Community pulse",
+  rewards: "Rewards",
+  safety: "Safety & review",
+};
+
+export function AdminPage({ section = "overview" }: { section?: AdminSection }) {
   const [queue, setQueue] = useState(initialQueue);
   const [reviewRecords, setReviewRecords] = useState<ReviewRecord[]>([
     { id: "record-1", author: "Mika Santos", title: "Finished the first wireframe for my portfolio project", decision: "approved", recorded: "Today, 9:42 AM" },
@@ -101,7 +126,6 @@ export function AdminPage() {
   const [filter, setFilter] = useState<ReviewFilter>("All sample posts");
   const [query, setQuery] = useState("");
   const [notice, setNotice] = useState("");
-  const [activeSection, setActiveSection] = useState("overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
@@ -212,10 +236,13 @@ export function AdminPage() {
               value={query}
             />
           </label>
-          <Link className="button button--secondary button--md admin-topbar__back" href="/home" prefetch={false}>
-            <ArrowLeft size={16} aria-hidden="true" />
-            Back to community
-          </Link>
+          <div className="admin-topbar__actions">
+            <ThemeToggle />
+            <Link className="button button--secondary button--md admin-topbar__back" href="/home" prefetch={false}>
+              <ArrowLeft size={16} aria-hidden="true" />
+              Back to community
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -225,14 +252,14 @@ export function AdminPage() {
           <p className="admin-sidebar__title">Workspace</p>
           <div className="admin-sidebar__drawer-header"><strong>Menu</strong><button aria-label="Close admin navigation" onClick={() => setSidebarOpen(false)} type="button"><X size={18} aria-hidden="true" /></button></div>
           <nav className="admin-section-nav" id="admin-section-links" aria-label="Admin dashboard sections">
-            <a aria-current={activeSection === "overview" ? "page" : undefined} className={activeSection === "overview" ? "is-active" : undefined} href="#overview" onClick={() => { setActiveSection("overview"); setSidebarOpen(false); }}><LayoutDashboard size={17} aria-hidden="true" />Dashboard</a>
-            <a aria-current={activeSection === "review-queue" ? "page" : undefined} className={activeSection === "review-queue" ? "is-active" : undefined} href="#review-queue" onClick={() => { setActiveSection("review-queue"); setSidebarOpen(false); }}><FileText size={17} aria-hidden="true" />Content review<span className="admin-sidebar__count">{pendingCount}</span></a>
-            <a aria-current={activeSection === "members" ? "page" : undefined} className={activeSection === "members" ? "is-active" : undefined} href="#members" onClick={() => { setActiveSection("members"); setSidebarOpen(false); }}><Users size={17} aria-hidden="true" />Members</a>
-            <a aria-current={activeSection === "analytics" ? "page" : undefined} className={activeSection === "analytics" ? "is-active" : undefined} href="#analytics" onClick={() => { setActiveSection("analytics"); setSidebarOpen(false); }}><BarChart3 size={17} aria-hidden="true" />Analytics</a>
-            <a aria-current={activeSection === "records" ? "page" : undefined} className={activeSection === "records" ? "is-active" : undefined} href="#records" onClick={() => { setActiveSection("records"); setSidebarOpen(false); }}><History size={17} aria-hidden="true" />Review records</a>
-            <a aria-current={activeSection === "community-pulse" ? "page" : undefined} className={activeSection === "community-pulse" ? "is-active" : undefined} href="#community-pulse" onClick={() => { setActiveSection("community-pulse"); setSidebarOpen(false); }}><Users size={17} aria-hidden="true" />Community pulse</a>
-            <a aria-current={activeSection === "rewards" ? "page" : undefined} className={activeSection === "rewards" ? "is-active" : undefined} href="#rewards" onClick={() => { setActiveSection("rewards"); setSidebarOpen(false); }}><Wallet size={17} aria-hidden="true" />Rewards</a>
-            <a aria-current={activeSection === "safety" ? "page" : undefined} className={activeSection === "safety" ? "is-active" : undefined} href="#safety" onClick={() => { setActiveSection("safety"); setSidebarOpen(false); }}><ShieldCheck size={17} aria-hidden="true" />Safety & review</a>
+            <Link aria-current={section === "overview" ? "page" : undefined} className={section === "overview" ? "is-active" : undefined} href={adminRoutes.overview} onClick={() => setSidebarOpen(false)}><LayoutDashboard size={17} aria-hidden="true" />Dashboard</Link>
+            <Link aria-current={section === "review-queue" ? "page" : undefined} className={section === "review-queue" ? "is-active" : undefined} href={adminRoutes["review-queue"]} onClick={() => setSidebarOpen(false)}><FileText size={17} aria-hidden="true" />Content review<span className="admin-sidebar__count">{pendingCount}</span></Link>
+            <Link aria-current={section === "members" ? "page" : undefined} className={section === "members" ? "is-active" : undefined} href={adminRoutes.members} onClick={() => setSidebarOpen(false)}><Users size={17} aria-hidden="true" />Members</Link>
+            <Link aria-current={section === "analytics" ? "page" : undefined} className={section === "analytics" ? "is-active" : undefined} href={adminRoutes.analytics} onClick={() => setSidebarOpen(false)}><BarChart3 size={17} aria-hidden="true" />Analytics</Link>
+            <Link aria-current={section === "records" ? "page" : undefined} className={section === "records" ? "is-active" : undefined} href={adminRoutes.records} onClick={() => setSidebarOpen(false)}><History size={17} aria-hidden="true" />Review records</Link>
+            <Link aria-current={section === "community-pulse" ? "page" : undefined} className={section === "community-pulse" ? "is-active" : undefined} href={adminRoutes["community-pulse"]} onClick={() => setSidebarOpen(false)}><Users size={17} aria-hidden="true" />Community pulse</Link>
+            <Link aria-current={section === "rewards" ? "page" : undefined} className={section === "rewards" ? "is-active" : undefined} href={adminRoutes.rewards} onClick={() => setSidebarOpen(false)}><Wallet size={17} aria-hidden="true" />Rewards</Link>
+            <Link aria-current={section === "safety" ? "page" : undefined} className={section === "safety" ? "is-active" : undefined} href={adminRoutes.safety} onClick={() => setSidebarOpen(false)}><ShieldCheck size={17} aria-hidden="true" />Safety & review</Link>
           </nav>
         </aside>
         <main className="app-page admin-page">
@@ -241,8 +268,8 @@ export function AdminPage() {
             <p className="eyebrow">
               <ShieldCheck size={15} aria-hidden="true" /> ADMIN PREVIEW
             </p>
-            <h1>Admin dashboard</h1>
-            <p>Community activity, member snapshots, review queue, and rewards.</p>
+            <h1>{adminSectionTitles[section]}</h1>
+            <p>{section === "overview" ? "Community activity, member snapshots, review queue, and rewards." : `${adminSectionTitles[section]} workspace.`}</p>
           </div>
           <Badge variant="info">Demo data · no real admin access</Badge>
         </header>
@@ -261,7 +288,7 @@ export function AdminPage() {
           </p>
         ) : null}
 
-        <section className="admin-dashboard-section" id="overview">
+        {section === "overview" ? <section className="admin-dashboard-section" id="overview">
           <div className="admin-section-heading">
             <div>
               <h2>Community overview</h2>
@@ -309,9 +336,50 @@ export function AdminPage() {
             <small>Based on reviewed sample posts</small>
           </article>
         </section>
-        </section>
 
-        <section className="admin-dashboard-section" id="analytics">
+        <section className="admin-insights-grid admin-overview-panels" aria-label="Dashboard details">
+          <article className="admin-insight-card">
+            <div className="admin-section-heading">
+              <div><h2>Weekly post activity</h2><p>{sampleWeeklyActivity.reduce((total, item) => total + item.posts, 0)} posts across the current week view</p></div>
+              <BarChart3 size={17} aria-hidden="true" />
+            </div>
+            <div className="admin-activity-chart" role="img" aria-label="Post activity for Monday through Sunday">
+              {sampleWeeklyActivity.map(({ day, posts }) => <div className="admin-activity-chart__column" key={day}><strong>{posts}</strong><span style={{ height: `${(posts / 18) * 100}%` }} /><small>{day}</small></div>)}
+            </div>
+          </article>
+
+          <article className="admin-insight-card">
+            <div className="admin-section-heading">
+              <div><h2>Content by topic</h2><p>{categoryCounts.length} topics represented in the current post list</p></div>
+              <Users size={17} aria-hidden="true" />
+            </div>
+            <div className="admin-topic-list">
+              {categoryCounts.map(({ category, count }) => <div className="admin-topic-row" key={category}><span>{category}</span><span className="admin-topic-row__track"><span style={{ width: `${(count / maxCategoryPosts) * 100}%` }} /></span><strong>{count}</strong></div>)}
+            </div>
+            <Link className="admin-panel-link" href={adminRoutes["community-pulse"]}>View community pulse <ArrowLeft size={14} aria-hidden="true" /></Link>
+          </article>
+
+          <article className="admin-insight-card">
+            <div className="admin-section-heading">
+              <div><h2>Needs attention</h2><p>Posts waiting for a moderator decision</p></div>
+              <Clock3 size={17} aria-hidden="true" />
+            </div>
+            {queue.filter((item) => item.status === "pending").length ? queue.filter((item) => item.status === "pending").map((item) => <div className="admin-overview-list-row" key={item.id}><span><strong>{item.title}</strong><small>{item.author} · {item.category} · {item.submitted}</small></span><Badge variant="info">Pending</Badge></div>) : <p className="admin-reward-note">No posts are waiting for review.</p>}
+            <Link className="admin-panel-link" href={adminRoutes["review-queue"]}>Open content review <ArrowLeft size={14} aria-hidden="true" /></Link>
+          </article>
+
+          <article className="admin-insight-card">
+            <div className="admin-section-heading">
+              <div><h2>Recent decisions</h2><p>Latest entries in the review record</p></div>
+              <History size={17} aria-hidden="true" />
+            </div>
+            {reviewRecords.slice(0, 4).map((record) => <div className="admin-overview-list-row" key={record.id}><span><strong>{record.author}</strong><small>{record.title} · {record.recorded}</small></span><Badge variant={record.decision === "approved" ? "success" : "info"}>{record.decision === "approved" ? "Approved" : "Changes"}</Badge></div>)}
+            <Link className="admin-panel-link" href={adminRoutes.records}>View all review records <ArrowLeft size={14} aria-hidden="true" /></Link>
+          </article>
+        </section>
+        </section> : null}
+
+        {section === "analytics" ? <section className="admin-dashboard-section" id="analytics">
           <div className="admin-section-heading"><div><h2>Analytics</h2><p>Illustrative activity and current review outcomes.</p></div><span className="app-sample-label">Sample data</span></div>
           <div className="admin-analytics-grid">
             <article className="admin-insight-card">
@@ -328,9 +396,9 @@ export function AdminPage() {
               <p className="admin-reward-note">Updates when a sample post is reviewed. Not live platform analytics.</p>
             </article>
           </div>
-        </section>
+        </section> : null}
 
-        <section className="admin-queue admin-dashboard-section" id="review-queue">
+        {section === "review-queue" ? <section className="admin-queue admin-dashboard-section" id="review-queue">
           <div className="app-section-heading">
             <div>
               <h2>Post review queue</h2>
@@ -422,9 +490,9 @@ export function AdminPage() {
               </button>
             </div>
           )}
-        </section>
+        </section> : null}
 
-        <section className="admin-dashboard-section" id="members">
+        {section === "members" ? <section className="admin-dashboard-section" id="members">
           <div className="admin-section-heading">
             <div>
               <h2>Member snapshots</h2>
@@ -455,9 +523,9 @@ export function AdminPage() {
               </article>
             ))}
           </div>
-        </section>
+        </section> : null}
 
-        <section className="admin-dashboard-section" id="records">
+        {section === "records" ? <section className="admin-dashboard-section" id="records">
           <div className="admin-section-heading">
             <div><h2>Review records</h2><p>Local demo log of moderation decisions.</p></div>
             <Button onClick={exportReviewRecords} size="sm" variant="secondary"><Download size={15} aria-hidden="true" /> Export CSV</Button>
@@ -469,10 +537,10 @@ export function AdminPage() {
             </table>
             {!visibleRecords.length ? <p className="admin-reward-note">No sample review records match your search.</p> : null}
           </div>
-        </section>
+        </section> : null}
 
-        <section className="admin-insights-grid" id="community-pulse">
-          <article className="admin-insight-card">
+        {section === "community-pulse" || section === "rewards" ? <section className="admin-insights-grid" id={section}>
+          {section === "community-pulse" ? <article className="admin-insight-card">
             <div className="admin-section-heading">
               <div>
                 <h2>Community pulse</h2>
@@ -495,9 +563,9 @@ export function AdminPage() {
                 </div>
               ))}
             </div>
-          </article>
+          </article> : null}
 
-          <article className="admin-insight-card" id="rewards">
+          {section === "rewards" ? <article className="admin-insight-card" id="rewards">
             <div className="admin-section-heading">
               <div>
                 <h2>Reward guide</h2>
@@ -520,10 +588,10 @@ export function AdminPage() {
             <p className="admin-reward-note">
               No money is transferred or guaranteed. Demo review actions do not issue rewards.
             </p>
-          </article>
-        </section>
+          </article> : null}
+        </section> : null}
 
-        <section className="admin-safety-note" id="safety">
+        {section === "safety" ? <section className="admin-safety-note" id="safety">
           <ShieldCheck size={18} aria-hidden="true" />
           <div>
             <h2>Safety and review</h2>
@@ -532,7 +600,7 @@ export function AdminPage() {
               are not connected. Sample posts and decisions stay in this page only.
             </p>
           </div>
-        </section>
+        </section> : null}
         </main>
         <aside className="admin-side-rail" aria-label="Review guidance">
           <section className="rail-section admin-rail">
