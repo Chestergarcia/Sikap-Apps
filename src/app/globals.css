@@ -5057,11 +5057,11 @@ a.feed-nav-item:hover {
   display: grid;
   min-width: 0;
   grid-template-columns: auto minmax(0, 1fr);
-  grid-template-rows: 32px minmax(30px, 1fr) auto;
+  grid-template-rows: 36px auto 1fr;
   align-content: start;
   align-items: center;
   min-height: 126px;
-  gap: 2px 9px;
+  gap: 7px 9px;
   padding: 14px;
   border: 1px solid var(--neutral-200);
   border-radius: 9px;
@@ -5073,7 +5073,7 @@ a.feed-nav-item:hover {
   display: grid;
   width: 32px;
   height: 32px;
-  grid-row: span 2;
+  grid-row: 1;
   place-items: center;
   border-radius: 8px;
 }
@@ -5102,6 +5102,8 @@ a.feed-nav-item:hover {
 }
 
 .admin-metric__label {
+  grid-column: 1 / -1;
+  align-self: start;
   overflow-wrap: anywhere;
   color: var(--neutral-700);
   font-size: 11px;
