@@ -5989,3 +5989,68 @@ a.feed-nav-item:hover {
 }
 
 .admin-demo-banner > svg { color: var(--primary-700); }
+
+/* Theme picker and dark community rail surfaces */
+.theme-toggle-wrap { position: relative; z-index: 2; }
+.theme-toggle-menu {
+  position: absolute;
+  z-index: 1600;
+  top: calc(100% + 8px);
+  right: 0;
+  display: grid;
+  width: 184px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  padding: 7px;
+  border: 1px solid var(--neutral-200);
+  border-radius: 11px;
+  background: var(--surface-card);
+  box-shadow: 0 12px 30px rgb(15 23 42 / 18%);
+}
+.theme-mode-choice {
+  width: 100%;
+  min-height: 42px;
+  grid-template-columns: 20px minmax(0, 1fr) 16px;
+  gap: 10px;
+  padding-inline: 11px;
+  color: var(--neutral-700);
+  font-size: 13px;
+}
+.feed-app[data-theme="light"] .theme-mode-choice[data-theme-choice="light"],
+.admin-console[data-theme="light"] .theme-mode-choice[data-theme-choice="light"],
+.feed-app[data-theme="dark"] .theme-mode-choice[data-theme-choice="dark"],
+.admin-console[data-theme="dark"] .theme-mode-choice[data-theme-choice="dark"] {
+  background: var(--primary-50);
+  color: var(--primary-700);
+}
+
+.feed-app[data-theme="dark"] .composer,
+.feed-app[data-theme="dark"] .rail-section,
+.feed-app[data-theme="dark"] .rail-note,
+.feed-app[data-theme="dark"] .feed-heading__filter,
+.feed-app[data-theme="dark"] .follow-button {
+  border-color: var(--neutral-200);
+  background: var(--surface-card);
+  color: var(--neutral-700);
+}
+.feed-app[data-theme="dark"] .rail-note { background: var(--neutral-100); }
+.feed-app[data-theme="dark"] .trend-topic,
+.feed-app[data-theme="dark"] .suggested-person { border-color: var(--neutral-200); }
+.feed-app[data-theme="dark"] .trend-topic strong,
+.feed-app[data-theme="dark"] .suggested-person__identity strong { color: var(--neutral-800); }
+.feed-app[data-theme="dark"] .feed-search kbd {
+  border-color: var(--neutral-200);
+  background: var(--neutral-100);
+  color: var(--neutral-500);
+}
+.feed-app[data-theme="dark"] .composer-category { background: var(--surface-card); color: var(--neutral-700); }
+.feed-app[data-theme="dark"] .composer-media { background: var(--primary-50); color: var(--primary-800); }
+.feed-app[data-theme="dark"] .feed-filter { border-color: var(--neutral-200); background: var(--surface-card); color: var(--neutral-700); }
+.feed-app[data-theme="dark"] .feed-filter--active { border-color: var(--primary-600); background: var(--primary-600); color: #fff; }
+.feed-app[data-theme="dark"] .feed-heading__filter:hover,
+.feed-app[data-theme="dark"] .follow-button:hover { background: var(--primary-50); }
+
+@media (max-width: 760px) {
+  .theme-toggle-menu { width: min(184px, calc(100vw - 24px)); }
+  .feed-topbar__account { gap: 6px; }
+}
