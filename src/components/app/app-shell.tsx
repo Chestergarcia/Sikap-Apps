@@ -14,11 +14,12 @@ import {
   Users,
   type LucideIcon,
 } from "lucide-react";
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Route } from "next";
 import { BrandWordmark } from "@/components/brand-wordmark";
 import { Avatar } from "@/components/ui/avatar";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { isSupabaseConfigured, supabase } from "@/lib/supabase/client";
 
 type AppPage =
   | "home"
@@ -110,6 +111,38 @@ export function AppShell({
   searchValue,
 }: AppShellProps) {
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const [account, setAccount] = useState({
+    handle: "@alex.rivera",
+    initials: "AR",
+    name: "Alex Rivera",
+  });
+
+  useEffect(() => {
+    if (!isSupabaseConfigured || !supabase) return;
+
+    let isMounted = true;
+    void supabase.auth.getUser().then(({ data }) => {
+      const user = data.user;
+      if (!isMounted || !user) return;
+
+      const name = String(user.user_metadata?.display_name ?? "").trim() ||
+        user.email?.split("@")[0] ||
+        "Member";
+      const initials = name
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part[0]?.toUpperCase() ?? "")
+        .join("") || "ME";
+      const handle = `@${name.toLowerCase().replace(/[^a-z0-9]+/g, ".").replace(/^\.|\.$/g, "")}`;
+
+      setAccount({ handle, initials, name });
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     function focusSearch(event: KeyboardEvent) {
@@ -170,9 +203,9 @@ export function AppShell({
       <div className={`feed-layout${rightRail ? "" : " feed-layout--no-rail"}`}>
         <aside className="feed-sidebar" aria-label="Main navigation">
           <div className="feed-sidebar__profile">
-            <Avatar initials="AR" name="Alex Rivera" size="lg" />
-            <strong>Alex Rivera</strong>
-            <span>@alex.rivera</span>
+            <Avatar initials={account.initials} name={account.name} size="lg" />
+            <strong>{account.name}</strong>
+            <span>{account.handle}</span>
           </div>
           <nav className="feed-nav">
             {primaryNavigation.map(({ href, icon: Icon, id, label }) => (
