@@ -31,8 +31,15 @@ export function AuthForm({ mode }: AuthFormProps) {
     }
 
     setIsSubmitting(true);
+    const emailRedirectTo = isSignUp
+      ? new URL("../login/", window.location.href).toString()
+      : undefined;
     const result = isSignUp
-      ? await supabase.auth.signUp({ email, password, options: { data: { display_name: name } } })
+      ? await supabase.auth.signUp({
+          email,
+          password,
+          options: { data: { display_name: name }, emailRedirectTo },
+        })
       : await supabase.auth.signInWithPassword({ email, password });
     setIsSubmitting(false);
 
