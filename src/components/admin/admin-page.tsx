@@ -3,7 +3,12 @@
 import Link from "next/link";
 import {
   ArrowLeft,
+  Activity,
+  AlertTriangle,
+  Bell,
   Check,
+  CheckCircle2,
+  ChevronDown,
   CircleDollarSign,
   Clock3,
   Download,
@@ -13,9 +18,15 @@ import {
   History,
   LayoutDashboard,
   Menu,
+  MoreHorizontal,
+  PanelLeftClose,
+  PanelLeftOpen,
   Play,
   Search,
+  Settings,
   ShieldCheck,
+  UserCheck,
+  UserRound,
   Users,
   Wallet,
   X,
@@ -48,9 +59,17 @@ type ReviewRecord = {
 };
 
 const sampleWeeklyActivity = [
-  { day: "Mon", posts: 8 }, { day: "Tue", posts: 12 }, { day: "Wed", posts: 7 },
-  { day: "Thu", posts: 15 }, { day: "Fri", posts: 11 }, { day: "Sat", posts: 18 }, { day: "Sun", posts: 15 },
+  { day: "Mon", date: "Nov 10, 2026", posts: 8, comments: 18, activeUsers: 52 },
+  { day: "Tue", date: "Nov 11, 2026", posts: 12, comments: 26, activeUsers: 64 },
+  { day: "Wed", date: "Nov 12, 2026", posts: 7, comments: 14, activeUsers: 48 },
+  { day: "Thu", date: "Nov 13, 2026", posts: 15, comments: 31, activeUsers: 76 },
+  { day: "Fri", date: "Nov 14, 2026", posts: 11, comments: 23, activeUsers: 68 },
+  { day: "Sat", date: "Nov 15, 2026", posts: 18, comments: 38, activeUsers: 86 },
+  { day: "Sun", date: "Nov 16, 2026", posts: 15, comments: 29, activeUsers: 72 },
 ];
+
+type ChartMetric = "posts" | "comments" | "activeUsers";
+const chartMetricLabels: Record<ChartMetric, string> = { posts: "Posts", comments: "Comments", activeUsers: "Active users" };
 
 const initialQueue: ReviewItem[] = [
   {
@@ -93,7 +112,7 @@ function ReviewTypeIcon({ type }: { type: ReviewItem["type"] }) {
   return <Icon size={16} aria-hidden="true" />;
 }
 
-export type AdminSection = "overview" | "review-queue" | "members" | "analytics" | "records" | "community-pulse" | "rewards" | "safety";
+export type AdminSection = "overview" | "review-queue" | "members" | "analytics" | "records" | "community-pulse" | "rewards" | "safety" | "notifications" | "settings";
 
 const adminRoutes: Record<AdminSection, string> = {
   overview: "/admin",
@@ -104,6 +123,8 @@ const adminRoutes: Record<AdminSection, string> = {
   "community-pulse": "/admin/community",
   rewards: "/admin/rewards",
   safety: "/admin/safety",
+  notifications: "/admin/notifications",
+  settings: "/admin/settings",
 };
 
 const adminSectionTitles: Record<AdminSection, string> = {
@@ -115,7 +136,38 @@ const adminSectionTitles: Record<AdminSection, string> = {
   "community-pulse": "Community pulse",
   rewards: "Rewards",
   safety: "Safety & review",
+  notifications: "Notifications",
+  settings: "Admin settings",
 };
+
+const demoMembers = [
+  { id: "member-1", name: "Mika Santos", email: "mika.santos@example.com", status: "Active", joined: "Nov 12, 2026", posts: 18, activity: "Posted a portfolio update" },
+  { id: "member-2", name: "Bea Cruz", email: "bea.cruz@example.com", status: "Active", joined: "Nov 08, 2026", posts: 12, activity: "Submitted a fitness check-in" },
+  { id: "member-3", name: "Luis Reyes", email: "luis.reyes@example.com", status: "Active", joined: "Oct 31, 2026", posts: 9, activity: "Completed a coding goal" },
+  { id: "member-4", name: "Ana Lim", email: "ana.lim@example.com", status: "Warned", joined: "Oct 20, 2026", posts: 5, activity: "Warning issued in demo" },
+  { id: "member-5", name: "Carlo Dela Cruz", email: "carlo.delacruz@example.com", status: "Suspended", joined: "Sep 17, 2026", posts: 3, activity: "Suspended in demo" },
+] as const;
+
+const demoNotifications = [
+  { id: "notification-1", title: "New post needs moderation", detail: "Bea Cruz submitted a fitness update.", type: "Moderation", time: "8 min ago", unread: true },
+  { id: "notification-2", title: "Reported content received", detail: "A sample report was added to the review queue.", type: "Safety", time: "42 min ago", unread: true },
+  { id: "notification-3", title: "New member registered", detail: "Carlo Dela Cruz joined the community.", type: "Members", time: "Today, 8:10 AM", unread: false },
+  { id: "notification-4", title: "Reward activity recorded", detail: "A simulated reward was attached to a sample post.", type: "Rewards", time: "Yesterday", unread: false },
+];
+
+const demoAuditLog = [
+  { id: "log-1", admin: "You", action: "Approved sample post", target: "Mika Santos · Wireframe update", time: "Today, 9:42 AM", status: "Completed" },
+  { id: "log-2", admin: "You", action: "Exported review records", target: "Review records · CSV", time: "Today, 9:30 AM", status: "Completed" },
+  { id: "log-3", admin: "Demo moderator", action: "Issued member warning", target: "Ana Lim", time: "Yesterday, 4:18 PM", status: "Demo only" },
+  { id: "log-4", admin: "Demo moderator", action: "Suspended member", target: "Carlo Dela Cruz", time: "Yesterday, 3:56 PM", status: "Demo only" },
+] as const;
+
+const demoRecentActivity = [
+  { id: "activity-1", name: "Mika Santos", action: "post approved", target: "Portfolio wireframe", time: "9:42 AM", tone: "success" },
+  { id: "activity-2", name: "Bea Cruz", action: "submitted a post", target: "Fitness check-in", time: "9:18 AM", tone: "info" },
+  { id: "activity-3", name: "Luis Reyes", action: "earned a milestone", target: "JavaScript basics", time: "8:56 AM", tone: "reward" },
+  { id: "activity-4", name: "Ana Lim", action: "received a warning", target: "Community guidelines", time: "Yesterday", tone: "warning" },
+] as const;
 
 export function AdminPage({ section = "overview" }: { section?: AdminSection }) {
   const [queue, setQueue] = useState(initialQueue);
@@ -127,6 +179,13 @@ export function AdminPage({ section = "overview" }: { section?: AdminSection }) 
   const [query, setQuery] = useState("");
   const [notice, setNotice] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [memberStatus, setMemberStatus] = useState<"All statuses" | "Active" | "Warned" | "Suspended">("All statuses");
+  const [analyticsRange, setAnalyticsRange] = useState<"7 days" | "30 days" | "90 days">("7 days");
+  const [chartMetric, setChartMetric] = useState<ChartMetric>("posts");
+  const [hoveredChartPoint, setHoveredChartPoint] = useState<number | null>(null);
+  const [notifications, setNotifications] = useState(demoNotifications);
+  const [settingsSaved, setSettingsSaved] = useState(false);
 
   useEffect(() => {
     if (!sidebarOpen) return;
@@ -176,12 +235,14 @@ export function AdminPage({ section = "overview" }: { section?: AdminSection }) 
       return matchesStatus && matchesSearch;
     });
   }, [filter, query, queue]);
-  const visibleMembers = queue.filter((member) =>
-    `${member.author} ${member.category} ${member.title} ${member.status}`.toLowerCase().includes(query.trim().toLowerCase()),
-  );
   const visibleRecords = reviewRecords.filter((record) =>
     `${record.author} ${record.title} ${record.decision}`.toLowerCase().includes(query.trim().toLowerCase()),
   );
+  const visibleDemoMembers = demoMembers.filter((member) => {
+    const matchesSearch = `${member.name} ${member.email} ${member.status}`.toLowerCase().includes(query.trim().toLowerCase());
+    return matchesSearch && (memberStatus === "All statuses" || member.status === memberStatus);
+  });
+  const unreadNotifications = notifications.filter((item) => item.unread).length;
 
   function updateReview(id: string, status: Exclude<ReviewStatus, "pending">) {
     const review = queue.find((item) => item.id === id);
@@ -239,10 +300,10 @@ export function AdminPage({ section = "overview" }: { section?: AdminSection }) 
         </div>
       </header>
 
-      <div className="admin-layout">
+      <div className={`admin-layout${sidebarCollapsed ? " admin-layout--sidebar-collapsed" : ""}`}>
         {sidebarOpen ? <button aria-label="Close admin navigation" className="admin-sidebar__backdrop" onClick={() => setSidebarOpen(false)} type="button" /> : null}
-        <aside className={`admin-sidebar${sidebarOpen ? " admin-sidebar--open" : ""}`} aria-label="Admin navigation">
-          <p className="admin-sidebar__title">Workspace</p>
+        <aside className={`admin-sidebar${sidebarOpen ? " admin-sidebar--open" : ""}${sidebarCollapsed ? " admin-sidebar--collapsed" : ""}`} aria-label="Admin navigation">
+          <div className="admin-sidebar__title-row"><p className="admin-sidebar__title">Workspace</p><button className="admin-sidebar__collapse" aria-label={sidebarCollapsed ? "Expand admin navigation" : "Collapse admin navigation"} onClick={() => setSidebarCollapsed((collapsed) => !collapsed)} type="button">{sidebarCollapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}</button></div>
           <div className="admin-sidebar__drawer-header"><Link className="admin-brand admin-sidebar__brand" href="/admin" aria-label="SIKAP admin dashboard" prefetch={false}><BrandWordmark /></Link><button aria-label="Close admin navigation" onClick={() => setSidebarOpen(false)} type="button"><X size={18} aria-hidden="true" /></button></div>
           <nav className="admin-section-nav" id="admin-section-links" aria-label="Admin dashboard sections">
             <Link aria-current={section === "overview" ? "page" : undefined} className={section === "overview" ? "is-active" : undefined} href={adminRoutes.overview} onClick={() => setSidebarOpen(false)}><LayoutDashboard size={17} aria-hidden="true" />Dashboard</Link>
@@ -253,6 +314,8 @@ export function AdminPage({ section = "overview" }: { section?: AdminSection }) 
             <Link aria-current={section === "community-pulse" ? "page" : undefined} className={section === "community-pulse" ? "is-active" : undefined} href={adminRoutes["community-pulse"]} onClick={() => setSidebarOpen(false)}><Users size={17} aria-hidden="true" />Community pulse</Link>
             <Link aria-current={section === "rewards" ? "page" : undefined} className={section === "rewards" ? "is-active" : undefined} href={adminRoutes.rewards} onClick={() => setSidebarOpen(false)}><Wallet size={17} aria-hidden="true" />Rewards</Link>
             <Link aria-current={section === "safety" ? "page" : undefined} className={section === "safety" ? "is-active" : undefined} href={adminRoutes.safety} onClick={() => setSidebarOpen(false)}><ShieldCheck size={17} aria-hidden="true" />Safety & review</Link>
+            <Link aria-current={section === "notifications" ? "page" : undefined} className={section === "notifications" ? "is-active" : undefined} href={adminRoutes.notifications} onClick={() => setSidebarOpen(false)}><Bell size={17} aria-hidden="true" />Notifications{unreadNotifications ? <span className="admin-sidebar__count">{unreadNotifications}</span> : null}</Link>
+            <Link aria-current={section === "settings" ? "page" : undefined} className={section === "settings" ? "is-active" : undefined} href={adminRoutes.settings} onClick={() => setSidebarOpen(false)}><Settings size={17} aria-hidden="true" />Settings</Link>
           </nav>
         </aside>
         <main className="app-page admin-page">
@@ -328,16 +391,41 @@ export function AdminPage({ section = "overview" }: { section?: AdminSection }) 
             <span className="admin-metric__label">Approval rate</span>
             <small>Based on reviewed sample posts</small>
           </article>
+          <article className="admin-metric">
+            <span className="admin-metric__icon admin-metric__icon--blue" aria-hidden="true"><Activity size={18} /></span>
+            <span className="admin-metric__value">64%</span>
+            <span className="admin-metric__label">Engagement rate</span>
+            <small className="admin-metric__comparison">↑ 8.4% vs last week</small>
+          </article>
+          <article className="admin-metric">
+            <span className="admin-metric__icon admin-metric__icon--blue" aria-hidden="true"><UserCheck size={18} /></span>
+            <span className="admin-metric__value">86</span>
+            <span className="admin-metric__label">Active today</span>
+            <small className="admin-metric__comparison">↑ 12 members</small>
+          </article>
+          <article className="admin-metric">
+            <span className="admin-metric__icon admin-metric__icon--green" aria-hidden="true"><UserRound size={18} /></span>
+            <span className="admin-metric__value">24</span>
+            <span className="admin-metric__label">New this week</span>
+            <small className="admin-metric__comparison">↑ 14.2% vs last week</small>
+          </article>
+          <article className="admin-metric">
+            <span className="admin-metric__icon admin-metric__icon--amber" aria-hidden="true"><AlertTriangle size={18} /></span>
+            <span className="admin-metric__value">2</span>
+            <span className="admin-metric__label">Reports to review</span>
+            <small>Demo queue only</small>
+          </article>
         </section>
 
         <section className="admin-insights-grid admin-overview-panels" aria-label="Dashboard details">
           <article className="admin-insight-card">
             <div className="admin-section-heading">
-              <div><h2>Weekly post activity</h2><p>{sampleWeeklyActivity.reduce((total, item) => total + item.posts, 0)} posts across the current week view</p></div>
+              <div><h2>Weekly activity</h2><p>Hover a point to inspect the exact daily value</p></div>
               <BarChart3 size={17} aria-hidden="true" />
             </div>
-            <div className="admin-activity-chart" role="img" aria-label="Post activity for Monday through Sunday">
-              {sampleWeeklyActivity.map(({ day, posts }) => <div className="admin-activity-chart__column" key={day}><strong>{posts}</strong><span style={{ height: `${(posts / 18) * 100}%` }} /><small>{day}</small></div>)}
+            <div className="admin-chart-switcher" role="group" aria-label="Choose activity metric">{(Object.keys(chartMetricLabels) as ChartMetric[]).map((metric) => <button className={chartMetric === metric ? "is-active" : undefined} key={metric} onClick={() => { setChartMetric(metric); setHoveredChartPoint(null); }} type="button">{chartMetricLabels[metric]}</button>)}</div>
+            <div className="admin-activity-chart admin-activity-chart--interactive" role="img" aria-label={`${chartMetricLabels[chartMetric]} for Monday through Sunday`}>
+              {sampleWeeklyActivity.map((point, index) => { const value = point[chartMetric]; const isHovered = hoveredChartPoint === index; return <button aria-label={`${point.date}: ${value} ${chartMetricLabels[chartMetric]}`} className={`admin-activity-chart__column${isHovered ? " is-hovered" : ""}`} key={point.day} onFocus={() => setHoveredChartPoint(index)} onMouseEnter={() => setHoveredChartPoint(index)} onMouseLeave={() => setHoveredChartPoint(null)} onBlur={() => setHoveredChartPoint(null)} type="button"><strong>{value}</strong><span className="admin-activity-chart__guide" /><span className="admin-activity-chart__bar" style={{ height: `${(value / 90) * 100}%` }} /><small>{point.day}</small>{isHovered ? <span className="admin-chart-tooltip" role="status"><strong>{point.date}</strong><span>{chartMetricLabels[chartMetric]} <b>{value}</b></span><i /></span> : null}</button>; })}
             </div>
           </article>
 
@@ -369,16 +457,26 @@ export function AdminPage({ section = "overview" }: { section?: AdminSection }) 
             {reviewRecords.slice(0, 4).map((record) => <div className="admin-overview-list-row" key={record.id}><span><strong>{record.author}</strong><small>{record.title} · {record.recorded}</small></span><Badge variant={record.decision === "approved" ? "success" : "info"}>{record.decision === "approved" ? "Approved" : "Changes"}</Badge></div>)}
             <Link className="admin-panel-link" href={adminRoutes.records}>View all review records <ArrowLeft size={14} aria-hidden="true" /></Link>
           </article>
+          <article className="admin-insight-card admin-activity-feed-card">
+            <div className="admin-section-heading">
+              <div><h2>Recent activity</h2><p>Latest member and moderator events</p></div>
+              <Activity size={17} aria-hidden="true" />
+            </div>
+            <div className="admin-activity-feed">{demoRecentActivity.map((item) => <div className="admin-activity-feed__item" key={item.id}><span className={`admin-activity-feed__dot admin-activity-feed__dot--${item.tone}`} /><span><strong>{item.name}</strong> {item.action}<small>{item.target} · {item.time}</small></span></div>)}</div>
+            <Link className="admin-panel-link" href={adminRoutes.records}>Open activity logs <ArrowLeft size={14} aria-hidden="true" /></Link>
+          </article>
         </section>
         </section> : null}
 
         {section === "analytics" ? <section className="admin-dashboard-section" id="analytics">
-          <div className="admin-section-heading"><div><h2>Analytics</h2><p>Illustrative activity and current review outcomes.</p></div><span className="app-sample-label">Sample data</span></div>
+          <div className="admin-section-heading"><div><h2>Analytics</h2><p>Explore activity patterns across the community.</p></div><div className="admin-toolbar"><label className="admin-select"><span className="sr-only">Analytics date range</span><select value={analyticsRange} onChange={(event) => setAnalyticsRange(event.target.value as typeof analyticsRange)}><option>7 days</option><option>30 days</option><option>90 days</option></select><ChevronDown size={15} aria-hidden="true" /></label><span className="app-sample-label">Sample data</span></div></div>
+          <div className="admin-metrics admin-analytics-metrics"><article className="admin-metric"><span className="admin-metric__value">86</span><span className="admin-metric__label">Daily active users</span><small className="admin-metric__comparison">↑ 8.4%</small></article><article className="admin-metric"><span className="admin-metric__value">72</span><span className="admin-metric__label">Engaged posts</span><small>Across {analyticsRange}</small></article><article className="admin-metric"><span className="admin-metric__value">91%</span><span className="admin-metric__label">Approval rate</span><small>12 approved · 1 rejected</small></article><article className="admin-metric"><span className="admin-metric__value">3.8</span><span className="admin-metric__label">Avg. interactions</span><small>Likes and comments</small></article></div>
           <div className="admin-analytics-grid">
             <article className="admin-insight-card">
-              <div className="admin-section-heading"><div><h3>Post activity</h3><p>Sample posts this week</p></div><BarChart3 size={17} aria-hidden="true" /></div>
-              <div className="admin-activity-chart" role="img" aria-label="Illustrative post activity from Monday through Sunday">
-                {sampleWeeklyActivity.map(({ day, posts }) => <div className="admin-activity-chart__column" key={day}><strong>{posts}</strong><span style={{ height: `${(posts / 18) * 100}%` }} /><small>{day}</small></div>)}
+              <div className="admin-section-heading"><div><h3>Community activity</h3><p>Posts and active members · {analyticsRange}</p></div><BarChart3 size={17} aria-hidden="true" /></div>
+              <div className="admin-chart-switcher" role="group" aria-label="Choose analytics metric">{(Object.keys(chartMetricLabels) as ChartMetric[]).map((metric) => <button className={chartMetric === metric ? "is-active" : undefined} key={metric} onClick={() => { setChartMetric(metric); setHoveredChartPoint(null); }} type="button">{chartMetricLabels[metric]}</button>)}</div>
+              <div className="admin-activity-chart admin-activity-chart--interactive" role="img" aria-label={`${chartMetricLabels[chartMetric]} analytics chart`}>
+                {sampleWeeklyActivity.map((point, index) => { const value = point[chartMetric]; const isHovered = hoveredChartPoint === index; return <button aria-label={`${point.date}: ${value} ${chartMetricLabels[chartMetric]}`} className={`admin-activity-chart__column${isHovered ? " is-hovered" : ""}`} key={point.day} onFocus={() => setHoveredChartPoint(index)} onMouseEnter={() => setHoveredChartPoint(index)} onMouseLeave={() => setHoveredChartPoint(null)} onBlur={() => setHoveredChartPoint(null)} type="button"><strong>{value}</strong><span className="admin-activity-chart__guide" /><span className="admin-activity-chart__bar" style={{ height: `${(value / 90) * 100}%` }} /><small>{point.day}</small>{isHovered ? <span className="admin-chart-tooltip" role="status"><strong>{point.date}</strong><span>{chartMetricLabels[chartMetric]} <b>{value}</b></span><i /></span> : null}</button>; })}
               </div>
             </article>
             <article className="admin-insight-card">
@@ -386,8 +484,10 @@ export function AdminPage({ section = "overview" }: { section?: AdminSection }) 
               <div className="admin-outcome-row"><span>Approved</span><strong>{queue.filter((item) => item.status === "approved").length}</strong></div>
               <div className="admin-outcome-row"><span>Needs changes</span><strong>{queue.filter((item) => item.status === "changes").length}</strong></div>
               <div className="admin-outcome-row"><span>Pending</span><strong>{pendingCount}</strong></div>
-              <p className="admin-reward-note">Updates when a sample post is reviewed. Not live platform analytics.</p>
+              <div className="admin-topic-list"><div className="admin-topic-row"><span>UI/UX</span><span className="admin-topic-row__track"><span style={{ width: "78%" }} /></span><strong>42%</strong></div><div className="admin-topic-row"><span>Fitness</span><span className="admin-topic-row__track"><span style={{ width: "55%" }} /></span><strong>31%</strong></div><div className="admin-topic-row"><span>Coding</span><span className="admin-topic-row__track"><span style={{ width: "37%" }} /></span><strong>27%</strong></div></div>
             </article>
+            <article className="admin-insight-card"><div className="admin-section-heading"><div><h3>Member growth</h3><p>New registrations across {analyticsRange}</p></div><Users size={17} aria-hidden="true" /></div><div className="admin-growth-chart" role="img" aria-label="Illustrative member growth chart"><span style={{ height: "28%" }} /><span style={{ height: "42%" }} /><span style={{ height: "36%" }} /><span style={{ height: "61%" }} /><span style={{ height: "56%" }} /><span style={{ height: "78%" }} /><span style={{ height: "92%" }} /></div><div className="admin-chart-labels"><span>Week 1</span><span>Week 7</span></div></article>
+            <article className="admin-insight-card"><div className="admin-section-heading"><div><h3>Engagement summary</h3><p>What members interact with most</p></div><Activity size={17} aria-hidden="true" /></div><div className="admin-outcome-row"><span>Likes</span><strong>248</strong></div><div className="admin-outcome-row"><span>Comments</span><strong>64</strong></div><div className="admin-outcome-row"><span>Shares</span><strong>18</strong></div><p className="admin-reward-note">Analytics are illustrative until a backend data source is connected.</p></article>
           </div>
         </section> : null}
 
@@ -488,41 +588,22 @@ export function AdminPage({ section = "overview" }: { section?: AdminSection }) 
         {section === "members" ? <section className="admin-dashboard-section" id="members">
           <div className="admin-section-heading">
             <div>
-              <h2>Member snapshots</h2>
-              <p>People represented in the current sample review queue.</p>
+              <h2>Member directory</h2>
+              <p>Search members, inspect account status, and review activity.</p>
             </div>
-            <span className="app-sample-label">{queue.length} sample profiles</span>
+            <span className="app-sample-label">Demo directory · no account changes</span>
           </div>
-          <div className="admin-member-list">
-            {visibleMembers.map((item) => (
-              <article className="admin-member-card" key={`member-${item.id}`}>
-                <span className="admin-member-card__avatar" aria-hidden="true">
-                  {item.author.split(" ").map((part) => part[0]).join("")}
-                </span>
-                <span className="admin-member-card__identity">
-                  <strong>{item.author}</strong>
-                  <small>{item.category} · Community member</small>
-                </span>
-                <span className="admin-member-card__post">{item.title}</span>
-                <Badge
-                  variant={item.status === "approved" ? "success" : "info"}
-                >
-                  {item.status === "pending"
-                    ? "Pending review"
-                    : item.status === "approved"
-                      ? "Reviewed"
-                      : "Changes requested"}
-                </Badge>
-              </article>
-            ))}
-          </div>
+          <div className="admin-toolbar admin-member-toolbar"><label className="feed-search"><Search size={16} aria-hidden="true" /><input aria-label="Search members" placeholder="Search name or email" value={query} onChange={(event) => setQuery(event.target.value)} /></label><label className="admin-select"><span className="sr-only">Filter member status</span><select value={memberStatus} onChange={(event) => setMemberStatus(event.target.value as typeof memberStatus)}><option>All statuses</option><option>Active</option><option>Warned</option><option>Suspended</option></select><ChevronDown size={15} aria-hidden="true" /></label></div>
+          <div className="admin-records-table-wrap"><table className="admin-records-table admin-members-table"><thead><tr><th>Member</th><th>Status</th><th>Joined</th><th>Posts</th><th>Latest activity</th><th><span className="sr-only">Actions</span></th></tr></thead><tbody>{visibleDemoMembers.map((member) => <tr key={member.id}><td><div className="admin-table-member"><span className="admin-member-card__avatar" aria-hidden="true">{member.name.split(" ").map((part) => part[0]).join("")}</span><span><strong>{member.name}</strong><small>{member.email}</small></span></div></td><td><Badge variant={member.status === "Active" ? "success" : member.status === "Warned" ? "info" : "error"}>{member.status}</Badge></td><td>{member.joined}</td><td>{member.posts}</td><td>{member.activity}</td><td><button className="admin-icon-button" type="button" title={`Manage ${member.name}`} onClick={() => { setNotice(`${member.name}'s account controls are demo-only. Backend permissions are not connected.`); }}><MoreHorizontal size={18} aria-hidden="true" /></button></td></tr>)}</tbody></table>{!visibleDemoMembers.length ? <div className="feed-empty"><UserRound size={20} aria-hidden="true" /><strong>No members match</strong><span>Try another search or status filter.</span></div> : null}</div>
         </section> : null}
 
         {section === "records" ? <section className="admin-dashboard-section" id="records">
           <div className="admin-section-heading">
-            <div><h2>Review records</h2><p>Local demo log of moderation decisions.</p></div>
+            <div><h2>Admin activity logs</h2><p>Searchable audit history for admin actions and moderation decisions.</p></div>
             <Button onClick={exportReviewRecords} size="sm" variant="secondary"><Download size={15} aria-hidden="true" /> Export CSV</Button>
           </div>
+          <div className="admin-demo-banner" role="note"><History size={17} aria-hidden="true" /><p>Audit events are recorded locally for this demo. Persistent audit logs require backend storage and authenticated admin identities.</p></div>
+          <div className="admin-records-table-wrap"><table className="admin-records-table"><thead><tr><th>Admin</th><th>Action</th><th>Affected member or post</th><th>Date and time</th><th>Status</th></tr></thead><tbody>{demoAuditLog.filter((log) => `${log.admin} ${log.action} ${log.target} ${log.status}`.toLowerCase().includes(query.trim().toLowerCase())).map((log) => <tr key={log.id}><td>{log.admin}</td><td>{log.action}</td><td>{log.target}</td><td>{log.time}</td><td><Badge variant={log.status === "Completed" ? "success" : "info"}>{log.status}</Badge></td></tr>)}</tbody></table></div>
           <div className="admin-records-table-wrap">
             <table className="admin-records-table">
               <thead><tr><th>Member</th><th>Sample post</th><th>Decision</th><th>Recorded</th></tr></thead>
@@ -582,6 +663,18 @@ export function AdminPage({ section = "overview" }: { section?: AdminSection }) 
               No money is transferred or guaranteed. Demo review actions do not issue rewards.
             </p>
           </article> : null}
+        </section> : null}
+
+        {section === "notifications" ? <section className="admin-dashboard-section" id="notifications">
+          <div className="admin-section-heading"><div><h2>Notifications center</h2><p>Stay on top of moderation, member, safety, and reward activity.</p></div><Button size="sm" variant="secondary" onClick={() => setNotifications((items) => items.map((item) => ({ ...item, unread: false })))}><CheckCircle2 size={15} aria-hidden="true" /> Mark all as read</Button></div>
+          <div className="admin-notification-list">{notifications.map((item) => <article className={`admin-notification-card${item.unread ? " is-unread" : ""}`} key={item.id}><span className="admin-notification-icon"><Bell size={17} aria-hidden="true" /></span><div><strong>{item.title}</strong><p>{item.detail}</p><small>{item.type} · {item.time}</small></div><button className="admin-text-button" type="button" onClick={() => setNotifications((items) => items.map((current) => current.id === item.id ? { ...current, unread: false } : current))}>{item.unread ? "Mark read" : "Read"}</button></article>)}</div>
+          <div className="admin-demo-banner" role="note"><Bell size={17} aria-hidden="true" /><p>Notifications are local demo state. A production version needs event subscriptions and persistent read status.</p></div>
+        </section> : null}
+
+        {section === "settings" ? <section className="admin-dashboard-section" id="settings">
+          <div className="admin-section-heading"><div><h2>Admin settings</h2><p>Configure the workspace experience and review permissions.</p></div><span className="app-sample-label">Demo configuration</span></div>
+          <div className="admin-settings-grid"><article className="admin-insight-card"><div className="admin-section-heading"><div><h3>Admin profile</h3><p>Signed in as demo administrator</p></div><UserRound size={17} aria-hidden="true" /></div><label className="admin-setting-row"><span>Display name</span><input defaultValue="SIKAP Admin" /></label><label className="admin-setting-row"><span>Email</span><input defaultValue="admin@sikap.demo" type="email" /></label><p className="admin-reward-note">Authentication and profile persistence require backend integration.</p></article><article className="admin-insight-card"><div className="admin-section-heading"><div><h3>Roles and permissions</h3><p>Role-based access control preview</p></div><ShieldCheck size={17} aria-hidden="true" /></div><label className="admin-setting-row"><span>Current role</span><select defaultValue="Community moderator"><option>Community moderator</option><option>Administrator</option><option>Read-only analyst</option></select></label><div className="admin-permission-list"><span><CheckCircle2 size={15} /> Review content</span><span><CheckCircle2 size={15} /> View analytics</span><span><AlertTriangle size={15} /> Manage members · backend required</span></div></article><article className="admin-insight-card"><div className="admin-section-heading"><div><h3>Preferences</h3><p>Workspace behavior</p></div><Settings size={17} aria-hidden="true" /></div><label className="admin-setting-row"><span>Notification digest</span><select defaultValue="Daily"><option>Daily</option><option>Weekly</option><option>Off</option></select></label><label className="admin-setting-row"><span>Default date range</span><select defaultValue="7 days"><option>7 days</option><option>30 days</option><option>90 days</option></select></label><p className="admin-reward-note">Use the Theme menu in the header to switch between light and dark mode.</p></article></div>
+          <Button onClick={() => { setSettingsSaved(true); setNotice("Settings saved in this demo session only."); }}><Check size={15} aria-hidden="true" /> {settingsSaved ? "Saved" : "Save preferences"}</Button>
         </section> : null}
 
         {section === "safety" ? <section className="admin-safety-note" id="safety">

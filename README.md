@@ -10,7 +10,19 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Local development runs at `http://localhost:3000`. The public SIKAP demo is available at [https://chestergarcia.github.io/Sikap-Apps/](https://chestergarcia.github.io/Sikap-Apps/), with the admin dashboard at [https://chestergarcia.github.io/Sikap-Apps/admin/](https://chestergarcia.github.io/Sikap-Apps/admin/).
+
+## Supabase backend setup
+
+The backend foundation lives in [`supabase/schema.sql`](./supabase/schema.sql). To connect a Supabase project:
+
+1. Create a Supabase project.
+2. Copy [`.env.example`](./.env.example) to `.env.local`.
+3. Add the project URL and anon key from Supabase Project Settings → API.
+4. Run `supabase/schema.sql` in the Supabase SQL Editor.
+5. Start the app with `npm run dev` and test `/auth/sign-up`.
+
+Without those environment variables, the app stays in clearly labeled demo mode. GitHub Pages remains a static frontend deployment; authenticated backend usage should be deployed through a server-capable host with the same environment variables.
 
 ## GitHub Pages
 

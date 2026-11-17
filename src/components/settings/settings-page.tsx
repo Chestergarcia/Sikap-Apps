@@ -172,15 +172,15 @@ export function SettingsPage() {
                 <strong>Alex Rivera</strong>
               </div>
               <div>
-                <span>Email</span>
-                <strong>alex@example.test</strong>
+                <span>Email <small className="settings-account__optional">Optional</small></span>
+                <strong className="settings-account__muted">Not added</strong>
               </div>
               <Link className="button button--secondary button--md" href="/profile" prefetch={false}>
                 Edit public profile
               </Link>
             </div>
             <p className="settings-card__note">
-              This example address is not a real account contact.
+              You can use SIKAP without adding an email address. Add one later only if you want account recovery or email notifications.
             </p>
           </section>
         ) : null}

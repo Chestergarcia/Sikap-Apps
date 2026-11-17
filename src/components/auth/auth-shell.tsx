@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft, LockKeyhole, Sprout } from "lucide-react";
 import { Brand } from "@/components/brand";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
 
 type AuthShellProps = {
   children: React.ReactNode;
@@ -61,7 +62,7 @@ export function AuthShell({
           </div>
           <p className="auth-demo-note">
             <LockKeyhole size={14} aria-hidden="true" />
-            Demo screen only. Authentication is not connected.
+            {isSupabaseConfigured ? "Authentication is connected to Supabase." : "Demo screen only. Add Supabase environment variables to enable authentication."}
           </p>
         </div>
         <p className="auth-main__legal">
