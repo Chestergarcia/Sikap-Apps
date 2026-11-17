@@ -1604,6 +1604,11 @@ a {
   color: #fff;
 }
 
+.auth-aside > .brand-lockup {
+  width: min(100%, 430px);
+  margin-inline: auto;
+}
+
 .auth-aside__message {
   width: min(100%, 430px);
   margin: auto;
