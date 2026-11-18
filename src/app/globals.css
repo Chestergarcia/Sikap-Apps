@@ -7008,3 +7008,37 @@ html[data-theme="dark"] .brand-lockup {
   .task-card__author small { font-size: 9px; }
   .task-applicants { font-size: 10px; }
 }
+/* Task card hierarchy and spacing refinement. */
+.task-board { gap: 14px; }
+.task-column { padding: 12px; }
+.task-column__list { gap: 12px; }
+.task-card {
+  padding: 15px;
+  border-radius: 9px;
+}
+.task-card h2 { margin: 10px 0 6px; }
+.task-card > p { line-height: 1.5; }
+.task-card__meta {
+  margin-top: 11px;
+  padding-top: 9px;
+  color: #64748b;
+  font-weight: 500;
+}
+.task-card__meta svg { color: #2563eb; }
+.task-card__author strong {
+  color: #475569;
+  font-size: 12px;
+  font-weight: 650;
+}
+.task-card__author small { color: #94a3b8; }
+.task-card__footer { margin-top: 11px; }
+.task-applicants { color: #64748b; font-weight: 500; }
+
+@media (min-width: 1600px) {
+  .task-board { gap: 16px; }
+  .task-column { padding: 14px; }
+  .task-column__list { gap: 14px; }
+  .task-card { padding: 16px; }
+  .task-card__meta { font-size: 11px; }
+  .task-card__author strong { font-size: 12px; }
+}
