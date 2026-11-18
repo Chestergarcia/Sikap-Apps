@@ -6653,6 +6653,78 @@ html[data-theme="dark"] .brand-lockup {
   .task-how-list p { font-size: 12px; }
 }
 
+/* Final desktop canvas override. Keep this block last so older scale rules cannot shrink it back. */
+@media (min-width: 1051px) and (max-width: 1599px) {
+  .feed-layout {
+    width: min(95vw, 1500px);
+    grid-template-columns: 240px minmax(0, 1fr) 320px;
+    gap: 28px;
+  }
+  .task-card h2 { font-size: 16px; }
+  .task-card > p { font-size: 12px; }
+  .task-card__meta, .task-applicants { font-size: 10px; }
+  .task-card__author strong { font-size: 10px; }
+  .task-card__author small { font-size: 9px; }
+}
+
+@media (min-width: 1600px) {
+  .feed-layout {
+    width: min(95vw, 1800px);
+    grid-template-columns: 300px minmax(0, 1fr) 380px;
+    gap: 40px;
+  }
+  .feed-sidebar, .feed-rail { top: 40px; }
+  .feed-heading h1, .tasks-heading h1 { font-size: 34px; }
+  .feed-heading > div > p:last-child, .tasks-heading p:last-child { font-size: 14px; }
+  .feed-post__content h2 { font-size: 19px; }
+  .feed-post__content p, .composer textarea { font-size: 14px; }
+  .task-card { padding: 14px; }
+  .task-card h2 { font-size: clamp(16px, 0.95vw, 18px); line-height: 1.28; }
+  .task-card > p { font-size: 12px; line-height: 1.42; }
+  .task-card__meta, .task-applicants { font-size: 10px; }
+  .task-card__author strong { font-size: 10px; }
+  .task-card__author small { font-size: 9px; }
+  .task-card__meta span { white-space: nowrap; }
+  .task-rail-link { font-size: 14px; }
+  .task-how-list p { font-size: 12px; }
+}
+
+/* Last-in-file desktop override: the dashboard should use the monitor, not a narrow centered canvas. */
+@media (min-width: 1051px) and (max-width: 1599px) {
+  .feed-layout {
+    width: min(95vw, 1500px);
+    grid-template-columns: 240px minmax(0, 1fr) 320px;
+    gap: 28px;
+  }
+  .task-card h2 { font-size: 16px; }
+  .task-card > p { font-size: 12px; }
+  .task-card__meta, .task-applicants { font-size: 10px; }
+  .task-card__author strong { font-size: 10px; }
+  .task-card__author small { font-size: 9px; }
+}
+
+@media (min-width: 1600px) {
+  .feed-layout {
+    width: min(95vw, 1800px);
+    grid-template-columns: 300px minmax(0, 1fr) 380px;
+    gap: 40px;
+  }
+  .feed-sidebar, .feed-rail { top: 40px; }
+  .feed-heading h1, .tasks-heading h1 { font-size: 34px; }
+  .feed-heading > div > p:last-child, .tasks-heading p:last-child { font-size: 14px; }
+  .feed-post__content h2 { font-size: 19px; }
+  .feed-post__content p, .composer textarea { font-size: 14px; }
+  .task-card { padding: 14px; }
+  .task-card h2 { font-size: clamp(16px, 0.95vw, 18px); line-height: 1.28; }
+  .task-card > p { font-size: 12px; line-height: 1.42; }
+  .task-card__meta, .task-applicants { font-size: 10px; }
+  .task-card__author strong { font-size: 10px; }
+  .task-card__author small { font-size: 9px; }
+  .task-card__meta span { white-space: nowrap; }
+  .task-rail-link { font-size: 14px; }
+  .task-how-list p { font-size: 12px; }
+}
+
 /* Responsive finishing pass: keep the canvas wide without letting task metadata wrap away. */
 @media (min-width: 1051px) and (max-width: 1279px) {
   .feed-layout {
@@ -6861,5 +6933,40 @@ html[data-theme="dark"] .brand-lockup {
   .task-card > p { font-size: 13px; }
   .task-card__meta, .task-applicants { font-size: 10px; }
   .task-rail-link { font-size: 13px; }
+  .task-how-list p { font-size: 12px; }
+}
+/* Final desktop canvas override. Keep this block last so older scale rules cannot shrink it back. */
+@media (min-width: 1051px) and (max-width: 1599px) {
+  .feed-layout {
+    width: min(95vw, 1500px);
+    grid-template-columns: 240px minmax(0, 1fr) 320px;
+    gap: 28px;
+  }
+  .task-card h2 { font-size: 16px; }
+  .task-card > p { font-size: 12px; }
+  .task-card__meta, .task-applicants { font-size: 10px; }
+  .task-card__author strong { font-size: 10px; }
+  .task-card__author small { font-size: 9px; }
+}
+
+@media (min-width: 1600px) {
+  .feed-layout {
+    width: min(95vw, 1800px);
+    grid-template-columns: 300px minmax(0, 1fr) 380px;
+    gap: 40px;
+  }
+  .feed-sidebar, .feed-rail { top: 40px; }
+  .feed-heading h1, .tasks-heading h1 { font-size: 34px; }
+  .feed-heading > div > p:last-child, .tasks-heading p:last-child { font-size: 14px; }
+  .feed-post__content h2 { font-size: 19px; }
+  .feed-post__content p, .composer textarea { font-size: 14px; }
+  .task-card { padding: 14px; }
+  .task-card h2 { font-size: clamp(16px, 0.95vw, 18px); line-height: 1.28; }
+  .task-card > p { font-size: 12px; line-height: 1.42; }
+  .task-card__meta, .task-applicants { font-size: 10px; }
+  .task-card__author strong { font-size: 10px; }
+  .task-card__author small { font-size: 9px; }
+  .task-card__meta span { white-space: nowrap; }
+  .task-rail-link { font-size: 14px; }
   .task-how-list p { font-size: 12px; }
 }
