@@ -6186,3 +6186,206 @@ html[data-theme="dark"] .brand-lockup {
 @media (prefers-reduced-motion: reduce) {
   .admin-page, .admin-metric, .admin-console button, .admin-console a, .admin-activity-chart__bar, .admin-chart-tooltip { animation: none !important; transition-duration: 0.01ms !important; }
 }
+
+/* Reference dashboard redesign */
+.feed-app {
+  background: #f4f5f7;
+  color: #27313f;
+  font-size: 12px;
+}
+
+.feed-topbar { display: none; }
+
+.feed-layout {
+  width: min(100% - 48px, 1170px);
+  grid-template-columns: 190px minmax(0, 560px) 260px;
+  gap: 20px;
+  padding-top: 28px;
+}
+
+.feed-sidebar {
+  top: 28px;
+  min-height: calc(100vh - 56px);
+  gap: 12px;
+  padding: 0 0 10px;
+}
+
+.feed-sidebar__brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 29px;
+  padding: 0 10px;
+  text-decoration: none;
+}
+
+.feed-sidebar__brand .brand-wordmark {
+  color: #2563eb;
+  font-size: 20px;
+  letter-spacing: .1em;
+}
+
+.feed-sidebar__search {
+  display: flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 4px;
+  padding: 0 9px;
+  border: 1px solid #e4e7ec;
+  border-radius: 7px;
+  background: #fff;
+  color: #9aa3af;
+}
+
+.feed-sidebar__search:focus-within {
+  border-color: #93c5fd;
+  outline: 3px solid #eff6ff;
+}
+
+.feed-sidebar__search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #27313f;
+  font-size: 11px;
+}
+
+.feed-sidebar__search input::placeholder { color: #a8b0bb; }
+
+.feed-sidebar__profile {
+  order: 5;
+  margin-top: auto;
+  padding: 10px 10px 0;
+  border-top: 1px solid #e4e7ec;
+  border-bottom: 0;
+}
+
+.feed-sidebar__profile .avatar { margin-bottom: 4px; }
+.feed-sidebar__profile strong { font-size: 12px; }
+.feed-sidebar__profile > span:last-child { font-size: 10px; }
+
+.feed-nav { order: 3; gap: 2px; }
+.feed-sidebar__secondary { order: 4; gap: 2px; padding-top: 10px; border-color: #e4e7ec; }
+.feed-sidebar__footnote { order: 6; font-size: 9px; }
+
+.feed-nav-item {
+  min-height: 34px;
+  gap: 9px;
+  padding: 0 9px;
+  border-radius: 6px;
+  color: #687384;
+  font-size: 11px;
+}
+
+.feed-nav-item__icon svg { width: 15px; height: 15px; }
+.feed-nav-item--active { background: #edf3ff; color: #2563eb; }
+
+.feed-main { padding-bottom: 36px; }
+.feed-heading { display: none; }
+
+.composer,
+.feed-post,
+.rail-section,
+.rail-note {
+  border-color: #e1e5ea;
+  border-radius: 7px;
+  box-shadow: 0 1px 2px rgb(31 41 55 / 3%);
+}
+
+.composer { padding: 11px; }
+.composer__prompt { gap: 8px; }
+.composer__prompt strong { font-size: 11px; }
+.composer__prompt span { font-size: 10px; }
+.composer form { margin-top: 9px; }
+.composer textarea {
+  min-height: 46px;
+  padding: 8px 9px;
+  border-color: #e5e8ed;
+  border-radius: 5px;
+  background: #fbfcfd;
+  font-size: 11px;
+}
+.composer__actions { margin-top: 8px; }
+.composer-category { min-height: 27px; padding: 0 7px; border-radius: 5px; }
+.composer-category select { max-width: 80px; font-size: 10px; }
+.composer-media { min-height: 27px; padding: 0 7px; border-radius: 5px; font-size: 10px; }
+.composer-media svg { width: 15px; height: 15px; }
+.composer__actions > .button { min-height: 27px; font-size: 10px; }
+.composer__note { margin-top: 7px; font-size: 9px; }
+
+.feed-filters {
+  gap: 5px;
+  margin: 12px 0;
+}
+.feed-filter {
+  min-height: 28px;
+  padding: 0 11px;
+  border-color: #e1e5ea;
+  border-radius: 5px;
+  font-size: 10px;
+}
+.feed-filter--active { border-color: #2563eb; background: #2563eb; }
+.feed-post-list { gap: 10px; }
+.feed-post { padding: 11px; }
+.feed-post__header { gap: 8px; }
+.feed-post__identity { gap: 1px; }
+.feed-post__identity strong { font-size: 11px; }
+.feed-post__identity span { font-size: 9px; }
+.feed-post__content { margin-top: 9px; }
+.feed-post__content h2 { font-size: 12px; line-height: 1.35; }
+.feed-post__content p { margin-top: 5px; font-size: 10px; line-height: 1.5; }
+.post-media { min-height: 158px; margin-top: 10px; border-radius: 6px; }
+.post-media--design { background: radial-gradient(circle at 28% 70%, #ffd873 0, #d59bff 30%, #f5d5e8 66%, #dcecff 100%); }
+.post-media--video { min-height: 158px; background: linear-gradient(115deg, #b8b9f2, #3a75db 45%, #04c4bf); }
+.design-sample { opacity: .28; }
+.feed-post__review { margin-top: 8px; gap: 5px; }
+.feed-post__review-note { font-size: 9px; }
+.feed-post__actions { gap: 14px; margin-top: 8px; padding-top: 6px; }
+.post-action { min-height: 28px; gap: 4px; font-size: 10px; }
+.post-action svg { width: 13px; height: 13px; }
+
+.feed-rail { top: 28px; gap: 10px; }
+.rail-section, .rail-note { padding: 11px; }
+.rail-heading h2 { font-size: 11px; }
+.rail-caption { margin: 3px 0 7px; font-size: 9px; }
+.trend-topic { min-height: 38px; padding: 6px 0; }
+.trend-topic strong { font-size: 10px; }
+.trend-topic small { font-size: 9px; }
+.suggested-person { gap: 6px; padding-block: 6px; }
+.suggested-person__identity strong { font-size: 9px; }
+.suggested-person__identity small { font-size: 8px; }
+.follow-button { min-height: 24px; padding: 0 7px; font-size: 9px; }
+.rail-note p { font-size: 10px; line-height: 1.45; }
+.rail-footer { font-size: 9px; }
+
+@media (max-width: 1050px) {
+  .feed-layout { width: min(100% - 28px, 900px); grid-template-columns: 170px minmax(0, 1fr) 220px; gap: 14px; }
+}
+
+@media (min-width: 821px) and (max-width: 1050px) {
+  .feed-rail { display: grid; }
+  .feed-sidebar__profile { justify-items: start; padding-inline: 10px; }
+  .feed-sidebar__profile > strong,
+  .feed-sidebar__profile > span:last-child,
+  .feed-nav-item__label,
+  .feed-nav-item__soon,
+  .feed-sidebar__footnote { display: initial; }
+  .feed-nav-item { justify-content: flex-start; padding-inline: 9px; }
+}
+
+@media (max-width: 820px) {
+  .feed-layout { grid-template-columns: 165px minmax(0, 1fr); width: min(100% - 24px, 680px); }
+  .feed-rail { display: none; }
+}
+
+@media (max-width: 600px) {
+  .feed-layout { display: block; width: min(100% - 20px, 560px); padding-top: 14px; }
+  .feed-sidebar { display: none; }
+  .feed-main { padding-bottom: 76px; }
+  .composer__options { min-width: 0; }
+  .composer-media span { display: none; }
+  .feed-post__content p { font-size: 11px; }
+  .post-media { min-height: 145px; }
+}

@@ -202,6 +202,20 @@ export function AppShell({
 
       <div className={`feed-layout${rightRail ? "" : " feed-layout--no-rail"}`}>
         <aside className="feed-sidebar" aria-label="Main navigation">
+          <Link className="feed-sidebar__brand" href="/home" aria-label="SIKAP home" prefetch={false}>
+            <BrandWordmark />
+          </Link>
+          <label className="feed-sidebar__search">
+            <Search size={15} aria-hidden="true" />
+            <input
+              aria-label="Search Sikap"
+              onChange={(event) => onSearchChange(event.target.value)}
+              placeholder="Search"
+              ref={searchInputRef}
+              type="search"
+              value={searchValue}
+            />
+          </label>
           <div className="feed-sidebar__profile">
             <Avatar initials={account.initials} name={account.name} size="lg" />
             <strong>{account.name}</strong>
