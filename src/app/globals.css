@@ -6409,8 +6409,15 @@ html[data-theme="dark"] .brand-lockup {
   padding-top: 0;
   margin-top: 2px;
 }
-.profile-stats { gap: 12px; padding: 10px 14px; }
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(3, max-content) minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  padding: 10px 14px;
+}
 .profile-stats__demo { font-size: 10px; }
+.profile-stats__demo { margin-left: 0; justify-self: end; }
 .profile-post-list { padding: 8px; }
 .profile-post { padding: 12px; }
 .profile-post h2 { margin-top: 8px; font-size: 14px; }
