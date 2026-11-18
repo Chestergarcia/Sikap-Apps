@@ -6653,6 +6653,67 @@ html[data-theme="dark"] .brand-lockup {
   .task-how-list p { font-size: 12px; }
 }
 
+@media (min-width: 1600px) {
+  .feed-layout {
+    width: min(calc(100% - 96px), 1800px);
+    grid-template-columns: 300px minmax(0, 1fr) 380px;
+    gap: 40px;
+  }
+  .feed-sidebar, .feed-rail { top: 40px; }
+  .feed-sidebar__brand .brand-wordmark { font-size: 24px; }
+  .feed-sidebar__search { height: 46px; min-height: 46px; padding-inline: 12px; }
+  .feed-sidebar__search input { font-size: 15px; }
+  .feed-nav-item { min-height: 46px; gap: 13px; padding-inline: 12px; font-size: 15px; }
+  .feed-nav-item__icon svg { width: 20px; height: 20px; }
+  .feed-heading h1, .tasks-heading h1 { font-size: 36px; }
+  .feed-heading > div > p:last-child, .tasks-heading p:last-child { font-size: 16px; }
+  .feed-heading__filter { min-height: 38px; font-size: 13px; }
+  .composer, .feed-post { border-radius: 10px; }
+  .composer { padding: 18px; }
+  .composer__prompt strong { font-size: 16px; }
+  .composer__prompt span, .composer textarea, .feed-post__content p { font-size: 16px; }
+  .composer textarea { min-height: 76px; }
+  .composer-category, .composer-media { min-height: 36px; font-size: 13px; }
+  .composer__actions > .button { min-height: 36px; font-size: 13px; }
+  .feed-filter { min-height: 36px; padding-inline: 14px; font-size: 13px; }
+  .feed-post { padding: 18px; }
+  .feed-post__identity strong { font-size: 15px; }
+  .feed-post__identity span { font-size: 13px; }
+  .feed-post__content h2 { font-size: 20px; }
+  .post-action { min-height: 34px; font-size: 13px; }
+  .feed-rail .rail-section, .feed-rail .rail-note { padding: 18px; border-radius: 10px; }
+  .feed-rail .rail-heading h2 { font-size: 17px; }
+  .feed-rail .rail-caption { font-size: 14px; }
+  .feed-rail .trend-topic { min-height: 52px; padding-block: 10px; }
+  .feed-rail .trend-topic strong, .feed-rail .suggested-person__identity strong { font-size: 15px; }
+  .feed-rail .trend-topic small, .feed-rail .suggested-person__identity small { font-size: 13px; }
+  .feed-rail .suggested-person { padding-block: 10px; }
+  .feed-rail .follow-button { min-height: 34px; padding-inline: 12px; font-size: 13px; }
+  .feed-rail .rail-note p { font-size: 15px; }
+  .tasks-page { gap: 18px; }
+  .tasks-toolbar { padding-top: 5px; }
+  .task-category { min-height: 34px; padding-inline: 13px; font-size: 12px; }
+  .task-column { padding: 13px; border-radius: 9px; }
+  .task-column__heading { font-size: 13px; }
+  .task-card { padding: 14px; border-radius: 9px; }
+  .task-card h2 { font-size: 18px; }
+  .task-card > p { font-size: 15px; }
+  .task-card__meta, .task-applicants { font-size: 12px; }
+  .task-card__author strong { font-size: 12px; }
+  .task-card__author small { font-size: 11px; }
+  .task-offer { min-height: 34px; font-size: 12px; }
+  .task-rail-link { min-height: 46px; font-size: 15px; }
+  .task-how-list p { font-size: 13px; }
+  .app-page__heading h1, .profile-hero h1 { font-size: 32px; }
+  .app-page__heading > div > p:last-child { font-size: 16px; }
+  .profile-hero__body { padding-inline: 20px; }
+  .profile-hero__identity > p { font-size: 15px; }
+  .profile-tabs .profile-tab { min-height: 44px; font-size: 14px; }
+  .profile-post { padding: 18px; }
+  .profile-post h2 { font-size: 18px; }
+  .profile-post > p, .profile-about p { font-size: 15px; }
+}
+
 /* Final desktop scale: larger content with deliberate page-edge spacing. */
 @media (min-width: 1051px) {
   .feed-layout {
