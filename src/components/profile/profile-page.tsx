@@ -39,6 +39,20 @@ const profilePosts = [
     title: "One week of showing up for 20 minutes",
     body: "Short, consistent sessions worked better for me than waiting for a perfect free afternoon.",
   },
+  {
+    id: "research-notes",
+    category: "UI/UX",
+    date: "2 weeks ago",
+    title: "Organized my research notes by theme",
+    body: "Grouping similar observations together made the next design decisions feel much less overwhelming.",
+  },
+  {
+    id: "component-practice",
+    category: "Coding",
+    date: "3 weeks ago",
+    title: "Built a small component from scratch",
+    body: "I focused on the empty and loading states first, then added the happy path once the structure felt solid.",
+  },
 ];
 
 const milestones = [
