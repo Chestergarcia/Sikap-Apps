@@ -6652,3 +6652,57 @@ html[data-theme="dark"] .brand-lockup {
   .task-rail-link { font-size: 13px; }
   .task-how-list p { font-size: 12px; }
 }
+
+/* Final desktop scale: larger content with deliberate page-edge spacing. */
+@media (min-width: 1051px) {
+  .feed-layout {
+    width: min(calc(100% - 64px), 1440px);
+    grid-template-columns: 260px minmax(0, 1fr) 340px;
+    gap: 32px;
+  }
+  .feed-sidebar__search { height: 42px; min-height: 42px; }
+  .feed-sidebar__search input { font-size: 14px; }
+  .feed-nav-item { min-height: 44px; font-size: 14px; }
+  .feed-nav-item__icon svg { width: 18px; height: 18px; }
+  .feed-heading h1, .tasks-heading h1 { font-size: 32px; }
+  .feed-heading > div > p:last-child, .tasks-heading p:last-child { font-size: 15px; }
+  .feed-post__content h2 { font-size: 18px; }
+  .feed-post__content p, .composer textarea { font-size: 14px; }
+  .feed-rail .rail-heading h2 { font-size: 15px; }
+  .feed-rail .rail-caption { font-size: 13px; }
+  .feed-rail .trend-topic strong, .feed-rail .suggested-person__identity strong { font-size: 14px; }
+  .feed-rail .trend-topic small, .feed-rail .suggested-person__identity small { font-size: 12px; }
+  .feed-rail .rail-note p { font-size: 14px; }
+  .task-card h2 { font-size: 16px; }
+  .task-card > p { font-size: 14px; }
+  .task-card__meta, .task-applicants { font-size: 11px; }
+  .task-card__author strong { font-size: 11px; }
+  .task-card__author small { font-size: 10px; }
+  .task-rail-link { font-size: 14px; }
+  .task-how-list p { font-size: 13px; }
+}
+
+@media (min-width: 761px) and (max-width: 1050px) {
+  .feed-layout {
+    width: min(calc(100% - 48px), 1000px);
+    grid-template-columns: 200px minmax(0, 1fr) 260px;
+    gap: 20px;
+  }
+  .feed-sidebar__search { height: 40px; min-height: 40px; }
+  .feed-sidebar__search input { font-size: 13px; }
+  .feed-nav-item { min-height: 42px; font-size: 13px; }
+  .feed-nav-item__icon svg { width: 17px; height: 17px; }
+  .feed-heading h1, .tasks-heading h1 { font-size: 28px; }
+  .feed-post__content h2 { font-size: 16px; }
+  .feed-post__content p, .composer textarea { font-size: 13px; }
+  .feed-rail .rail-heading h2 { font-size: 14px; }
+  .feed-rail .rail-caption { font-size: 12px; }
+  .feed-rail .trend-topic strong, .feed-rail .suggested-person__identity strong { font-size: 13px; }
+  .feed-rail .trend-topic small, .feed-rail .suggested-person__identity small { font-size: 11px; }
+  .feed-rail .rail-note p { font-size: 13px; }
+  .task-card h2 { font-size: 15px; }
+  .task-card > p { font-size: 13px; }
+  .task-card__meta, .task-applicants { font-size: 10px; }
+  .task-rail-link { font-size: 13px; }
+  .task-how-list p { font-size: 12px; }
+}
