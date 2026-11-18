@@ -6423,6 +6423,23 @@ html[data-theme="dark"] .brand-lockup {
 .profile-post h2 { margin-top: 8px; font-size: 14px; }
 .profile-post > p, .profile-about p { font-size: 12px; line-height: 1.55; }
 
+/* Improve right-rail readability while keeping its compact card layout. */
+.feed-rail .rail-section,
+.feed-rail .rail-note { padding: 14px; }
+.feed-rail .rail-heading h2 { font-size: 13px; }
+.feed-rail .rail-heading > svg { width: 16px; height: 16px; }
+.feed-rail .rail-caption { margin: 4px 0 10px; font-size: 11px; line-height: 1.45; }
+.feed-rail .trend-topic { min-height: 46px; padding: 8px 0; }
+.feed-rail .trend-topic strong { font-size: 12px; }
+.feed-rail .trend-topic small { font-size: 10px; }
+.feed-rail .suggested-person { gap: 8px; padding-block: 8px; }
+.feed-rail .suggested-person__identity strong { font-size: 11px; }
+.feed-rail .suggested-person__identity small { font-size: 10px; }
+.feed-rail .follow-button { min-height: 28px; padding-inline: 9px; font-size: 11px; }
+.feed-rail .rail-note p { font-size: 12px; line-height: 1.55; }
+.feed-rail .rail-note__icon { width: 29px; height: 29px; }
+.feed-rail .rail-footer { padding-inline: 3px; font-size: 10px; }
+
 @media (max-width: 600px) {
   .profile-hero__actions { grid-column: 1 / -1; }
   .profile-stats__demo { display: none; }
