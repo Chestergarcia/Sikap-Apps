@@ -7042,3 +7042,18 @@ html[data-theme="dark"] .brand-lockup {
   .task-card__meta { font-size: 11px; }
   .task-card__author strong { font-size: 12px; }
 }
+/* Increase task metadata contrast without competing with the bold title. */
+.task-card__meta {
+  color: #334155;
+  font-weight: 600;
+}
+.task-card__meta svg { color: #1d4ed8; }
+.task-card__author strong {
+  color: #334155;
+  font-weight: 700;
+}
+.task-card__author small { color: #64748b; }
+.task-applicants {
+  color: #334155;
+  font-weight: 600;
+}
