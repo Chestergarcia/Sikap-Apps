@@ -6,6 +6,7 @@ import {
   Bell,
   Bookmark,
   CircleDollarSign,
+  ClipboardList,
   Compass,
   Home,
   Plus,
@@ -24,6 +25,7 @@ import { isSupabaseConfigured, supabase } from "@/lib/supabase/client";
 type AppPage =
   | "home"
   | "explore"
+  | "tasks"
   | "progress"
   | "profile"
   | "rewards"
@@ -46,6 +48,7 @@ const primaryNavigation: {
 }[] = [
   { href: "/home", icon: Home, id: "home", label: "Home feed" },
   { href: "/explore", icon: Compass, id: "explore", label: "Explore" },
+  { href: "/tasks", icon: ClipboardList, id: "tasks", label: "Tasks" },
   { href: "/home#compose", icon: Plus, id: "create", label: "Share progress" },
   { href: "/progress", icon: Activity, id: "progress", label: "Progress" },
   { href: "/profile", icon: Users, id: "profile", label: "Profile" },
