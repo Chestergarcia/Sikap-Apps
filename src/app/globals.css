@@ -6191,7 +6191,7 @@ html[data-theme="dark"] .brand-lockup {
 .feed-app {
   background: #f4f5f7;
   color: #27313f;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .feed-topbar { display: none; }
@@ -6226,7 +6226,9 @@ html[data-theme="dark"] .brand-lockup {
 
 .feed-sidebar__search {
   display: flex;
-  min-height: 34px;
+  width: 100%;
+  height: 32px;
+  min-height: 32px;
   align-items: center;
   gap: 7px;
   margin: 0 0 4px;
@@ -6249,7 +6251,7 @@ html[data-theme="dark"] .brand-lockup {
   outline: 0;
   background: transparent;
   color: #27313f;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .feed-sidebar__search input::placeholder { color: #a8b0bb; }
@@ -6283,7 +6285,24 @@ html[data-theme="dark"] .brand-lockup {
 .feed-nav-item--active { background: #edf3ff; color: #2563eb; }
 
 .feed-main { padding-bottom: 36px; }
-.feed-heading { display: none; }
+.feed-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.feed-heading .eyebrow { margin: 0 0 4px; font-size: 10px; }
+.feed-heading h1 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+.feed-heading > div > p:last-child { margin: 5px 0 0; color: #687384; font-size: 12px; }
+.feed-heading__filter { min-height: 30px; font-size: 11px; }
 
 .composer,
 .feed-post,
@@ -6296,8 +6315,8 @@ html[data-theme="dark"] .brand-lockup {
 
 .composer { padding: 11px; }
 .composer__prompt { gap: 8px; }
-.composer__prompt strong { font-size: 11px; }
-.composer__prompt span { font-size: 10px; }
+.composer__prompt strong { font-size: 12px; }
+.composer__prompt span { font-size: 11px; }
 .composer form { margin-top: 9px; }
 .composer textarea {
   min-height: 46px;
@@ -6305,37 +6324,37 @@ html[data-theme="dark"] .brand-lockup {
   border-color: #e5e8ed;
   border-radius: 5px;
   background: #fbfcfd;
-  font-size: 11px;
+  font-size: 12px;
 }
 .composer__actions { margin-top: 8px; }
 .composer-category { min-height: 27px; padding: 0 7px; border-radius: 5px; }
-.composer-category select { max-width: 80px; font-size: 10px; }
-.composer-media { min-height: 27px; padding: 0 7px; border-radius: 5px; font-size: 10px; }
+.composer-category select { max-width: 80px; font-size: 11px; }
+.composer-media { min-height: 27px; padding: 0 7px; border-radius: 5px; font-size: 11px; }
 .composer-media svg { width: 15px; height: 15px; }
-.composer__actions > .button { min-height: 27px; font-size: 10px; }
-.composer__note { margin-top: 7px; font-size: 9px; }
+.composer__actions > .button { min-height: 30px; font-size: 11px; }
+.composer__note { margin-top: 7px; font-size: 10px; }
 
 .feed-filters {
   gap: 5px;
   margin: 12px 0;
 }
 .feed-filter {
-  min-height: 28px;
+  min-height: 30px;
   padding: 0 11px;
   border-color: #e1e5ea;
   border-radius: 5px;
-  font-size: 10px;
+  font-size: 11px;
 }
 .feed-filter--active { border-color: #2563eb; background: #2563eb; }
 .feed-post-list { gap: 10px; }
 .feed-post { padding: 11px; }
 .feed-post__header { gap: 8px; }
 .feed-post__identity { gap: 1px; }
-.feed-post__identity strong { font-size: 11px; }
-.feed-post__identity span { font-size: 9px; }
+.feed-post__identity strong { font-size: 12px; }
+.feed-post__identity span { font-size: 10px; }
 .feed-post__content { margin-top: 9px; }
-.feed-post__content h2 { font-size: 12px; line-height: 1.35; }
-.feed-post__content p { margin-top: 5px; font-size: 10px; line-height: 1.5; }
+.feed-post__content h2 { font-size: 14px; line-height: 1.35; }
+.feed-post__content p { margin-top: 5px; font-size: 12px; line-height: 1.55; }
 .post-media { min-height: 158px; margin-top: 10px; border-radius: 6px; }
 .post-media--design { background: radial-gradient(circle at 28% 70%, #ffd873 0, #d59bff 30%, #f5d5e8 66%, #dcecff 100%); }
 .post-media--video { min-height: 158px; background: linear-gradient(115deg, #b8b9f2, #3a75db 45%, #04c4bf); }
@@ -6343,7 +6362,7 @@ html[data-theme="dark"] .brand-lockup {
 .feed-post__review { margin-top: 8px; gap: 5px; }
 .feed-post__review-note { font-size: 9px; }
 .feed-post__actions { gap: 14px; margin-top: 8px; padding-top: 6px; }
-.post-action { min-height: 28px; gap: 4px; font-size: 10px; }
+.post-action { min-height: 28px; gap: 4px; font-size: 11px; }
 .post-action svg { width: 13px; height: 13px; }
 
 .feed-rail { top: 28px; gap: 10px; }
@@ -6359,6 +6378,33 @@ html[data-theme="dark"] .brand-lockup {
 .follow-button { min-height: 24px; padding: 0 7px; font-size: 9px; }
 .rail-note p { font-size: 10px; line-height: 1.45; }
 .rail-footer { font-size: 9px; }
+
+/* Keep controls consistent across profile and app pages. */
+.app-page .button,
+.profile-hero__actions .button,
+.profile-edit-form__actions .button,
+.goal-form__actions .button {
+  min-height: 32px;
+  padding-inline: 12px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.profile-hero__actions { gap: 6px; padding-top: 10px; }
+.profile-hero__actions .button--lg { min-height: 32px; padding-inline: 14px; }
+.profile-tabs .profile-tab { min-height: 36px; font-size: 12px; }
+.profile-edit-form input,
+.profile-edit-form textarea,
+.goal-form input,
+.goal-form select { min-height: 36px; font-size: 12px; }
+
+@media (max-width: 760px) {
+  .feed-heading { align-items: flex-start; }
+  .feed-heading h1 { font-size: 19px; }
+  .app-page .button,
+  .profile-hero__actions .button,
+  .profile-edit-form__actions .button,
+  .goal-form__actions .button { min-height: 36px; }
+}
 
 @media (max-width: 1050px) {
   .feed-layout { width: min(100% - 28px, 900px); grid-template-columns: 170px minmax(0, 1fr) 220px; gap: 14px; }
