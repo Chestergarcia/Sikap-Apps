@@ -6970,3 +6970,41 @@ html[data-theme="dark"] .brand-lockup {
   .task-rail-link { font-size: 14px; }
   .task-how-list p { font-size: 12px; }
 }
+/* Task card information must remain visible at every desktop scale. */
+.task-card__meta {
+  color: #334155;
+  font-size: 12px;
+  font-weight: 600;
+}
+.task-card__meta span {
+  min-width: 0;
+  white-space: nowrap;
+}
+.task-card__meta svg { width: 14px; height: 14px; flex: 0 0 auto; }
+.task-card__author { flex: 1 1 auto; }
+.task-card__author > span:last-child { flex: 1 1 auto; }
+.task-card__author strong {
+  overflow: visible;
+  color: #1f2937;
+  font-size: 12px;
+  line-height: 1.25;
+  text-overflow: clip;
+  white-space: normal;
+}
+.task-card__author small {
+  overflow: visible;
+  color: #64748b;
+  font-size: 10px;
+  line-height: 1.25;
+  text-overflow: clip;
+  white-space: normal;
+}
+.task-applicants { color: #475569; font-size: 11px; }
+.task-applicants svg { width: 14px; height: 14px; }
+
+@media (max-width: 600px) {
+  .task-card__meta { font-size: 11px; }
+  .task-card__author strong { font-size: 11px; }
+  .task-card__author small { font-size: 9px; }
+  .task-applicants { font-size: 10px; }
+}
