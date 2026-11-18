@@ -6574,3 +6574,62 @@ html[data-theme="dark"] .brand-lockup {
   .tasks-toolbar { align-items: flex-start; flex-direction: column; }
   .tasks-sort { width: 100%; justify-content: space-between; }
 }
+
+/* Desktop canvas: use the available screen while preserving breathing room. */
+@media (min-width: 1051px) {
+  .feed-layout {
+    width: min(calc(100% - 48px), 1380px);
+    grid-template-columns: 240px minmax(0, 760px) 320px;
+    gap: 28px;
+  }
+  .feed-sidebar, .feed-rail { top: 32px; }
+  .feed-sidebar__search { height: 38px; min-height: 38px; }
+  .feed-sidebar__search input { font-size: 13px; }
+  .feed-nav-item { min-height: 40px; gap: 11px; font-size: 13px; }
+  .feed-nav-item__icon svg { width: 17px; height: 17px; }
+  .feed-heading h1, .tasks-heading h1 { font-size: 28px; }
+  .feed-heading > div > p:last-child, .tasks-heading p:last-child { font-size: 14px; }
+  .composer__prompt strong { font-size: 14px; }
+  .composer__prompt span, .composer textarea, .feed-post__content p { font-size: 13px; }
+  .feed-post__identity strong { font-size: 13px; }
+  .feed-post__identity span { font-size: 11px; }
+  .feed-post__content h2 { font-size: 16px; }
+  .post-action { font-size: 12px; }
+  .feed-rail .rail-heading h2 { font-size: 14px; }
+  .feed-rail .rail-caption { font-size: 12px; }
+  .feed-rail .trend-topic strong, .feed-rail .suggested-person__identity strong { font-size: 13px; }
+  .feed-rail .trend-topic small, .feed-rail .suggested-person__identity small { font-size: 11px; }
+  .feed-rail .rail-note p { font-size: 13px; }
+  .task-card h2 { font-size: 14px; }
+  .task-card > p { font-size: 12px; }
+  .task-card__meta, .task-applicants { font-size: 10px; }
+  .task-card__author strong { font-size: 10px; }
+  .task-card__author small { font-size: 9px; }
+  .task-rail-link { font-size: 12px; }
+  .task-how-list p { font-size: 11px; }
+}
+
+@media (min-width: 761px) and (max-width: 1050px) {
+  .feed-layout {
+    width: min(calc(100% - 16px), 1000px);
+    grid-template-columns: 190px minmax(0, 1fr) 250px;
+    gap: 16px;
+  }
+  .feed-sidebar__search { height: 36px; min-height: 36px; }
+  .feed-sidebar__search input { font-size: 12px; }
+  .feed-nav-item { min-height: 38px; font-size: 12px; }
+  .feed-nav-item__icon svg { width: 16px; height: 16px; }
+  .feed-rail { display: grid; }
+  .feed-sidebar__profile { justify-items: start; padding-inline: 10px; }
+  .feed-sidebar__profile > strong,
+  .feed-sidebar__profile > span:last-child,
+  .feed-nav-item__label,
+  .feed-nav-item__soon,
+  .feed-sidebar__footnote { display: initial; }
+  .feed-nav-item { justify-content: flex-start; padding-inline: 9px; }
+  .feed-rail .rail-heading h2 { font-size: 13px; }
+  .feed-rail .rail-caption { font-size: 11px; }
+  .feed-rail .trend-topic strong, .feed-rail .suggested-person__identity strong { font-size: 12px; }
+  .feed-rail .trend-topic small, .feed-rail .suggested-person__identity small { font-size: 10px; }
+  .feed-rail .rail-note p { font-size: 12px; }
+}
